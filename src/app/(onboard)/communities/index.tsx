@@ -2,7 +2,7 @@ import { Text, View } from 'react-native'
 
 export default function CommunitiesScreen() {
   return (
-    <View>
+    <View className="flex flex-1 bg-white">
       <Text>Communities Screen</Text>
     </View>
   )

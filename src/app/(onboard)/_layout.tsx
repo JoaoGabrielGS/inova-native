@@ -1,4 +1,7 @@
+import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
 import { Tabs } from 'expo-router'
+import { Platform } from 'react-native'
+import { TabHeader } from '@/src/components/header'
 import { BookshelfIcon } from '@/src/components/icons/bookshelf'
 import { CommunitiesIcon } from '@/src/components/icons/communities'
 import { HomeIcon } from '@/src/components/icons/home'
@@ -11,9 +14,29 @@ export default function OnboardLayout() {
       screenOptions={{
         tabBarInactiveTintColor: '#0E47B3',
         tabBarActiveTintColor: '#0E47B3',
+        headerShown: true,
+        headerStyle: {
+          width: 120
+        },
+        header: (props: BottomTabHeaderProps) => <TabHeader {...props} />,
         tabBarStyle: {
-          height: 100,
-          display: 'flex'
+          display: 'flex',
+          height: Platform.OS === 'ios' ? 90 : 60,
+          backgroundColor: 'white',
+          ...Platform.select({
+            ios: {
+              shadowColor: 'black',
+              shadowOffset: {
+                width: 0,
+                height: -1
+              },
+              shadowOpacity: 0.08,
+              shadowRadius: 2
+            },
+            android: {
+              elevation: 4
+            }
+          })
         },
         tabBarItemStyle: {
           justifyContent: 'center',
