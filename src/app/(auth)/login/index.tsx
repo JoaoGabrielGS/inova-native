@@ -6,7 +6,7 @@ import { useLogin } from '@/src/app/(auth)/login/useLogin'
 import { Button } from '@/src/components/ui/button'
 
 export default function LoginScreen() {
-  const login = useLogin()
+  const { actions } = useLogin()
 
   return (
     <ImageBackground
@@ -41,7 +41,11 @@ export default function LoginScreen() {
             Esqueci minha senha
           </Text>
 
-          <Button text="Entrar" variant="primary" />
+          <Button
+            onPress={actions.handleGoToHome}
+            text="Entrar"
+            variant="primary"
+          />
           <View className="w-full border-[0.5px] border-brand-gray-2 my-8" />
           <Button icon={google} text="Entrar com Google" variant="social" />
 
