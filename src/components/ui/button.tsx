@@ -23,7 +23,7 @@ export function Button({
   const variants = {
     primary: 'bg-brand-complementary-2 border border-dark-1',
     outline: 'border border-brand-dark-1 bg-white',
-    social: 'border border-dark-1 bg-white'
+    social: 'border border-brand-primary-1 bg-white'
   }
 
   return (

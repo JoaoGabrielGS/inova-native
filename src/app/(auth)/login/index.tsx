@@ -37,15 +37,18 @@ export default function LoginScreen() {
             />
           </View>
 
-          <Text className="text-center text-brand-secondary-2 my-4">
+          <Text className="underline text-center text-brand-secondary-2 mt-4 mb-6">
             Esqueci minha senha
           </Text>
 
           <Button text="Entrar" variant="primary" />
-
-          <View className="w-full border border-brand-gray-2 my-6" />
-
+          <View className="w-full border-[0.5px] border-brand-gray-2 my-8" />
           <Button icon={google} text="Entrar com Google" variant="social" />
+
+          <Text className="text-center mt-6 text-brand-gray-1">
+            Não tem conta ?
+            <Text className="underline text-brand-primary-1"> Cadastre-se</Text>
+          </Text>
         </View>
       </View>
     </ImageBackground>
