@@ -51,6 +51,12 @@ module.exports = {
             2: '#112F69',
             3: '#1D3E7D',
             4: '#1F4A9A',
+          },
+          light: {
+            n1: '#F8F8F8'
+          },
+          'dark-gray': {
+            1: '#2C2E32'
           }
         }
       }
