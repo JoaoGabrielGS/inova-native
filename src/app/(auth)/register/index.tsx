@@ -54,11 +54,11 @@ const RegisterScreen = () => {
           }}
           showsVerticalScrollIndicator={false}
         >
-          <View className="w-10/12">
-            <Text className="font-bold text-brand-primary-10 text-4xl">
+          <View className="w-10/12 items-center">
+            <Text className="font-bold text-brand-primary-10 text-4xl text-center">
               Bem-Vindo(a) ao {"\n"}Inova Carreira
             </Text>
-            <Text className="text-white mt-4">
+            <Text className="text-white mt-4 text-center">
               Preencha o formulário com seus dados cadastrais
             </Text>
           </View>
