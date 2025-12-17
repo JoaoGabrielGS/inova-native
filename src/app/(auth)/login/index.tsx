@@ -1,44 +1,42 @@
-import { Image, ImageBackground, Text, TextInput, View } from 'react-native'
+import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
 import google from '@/assets/icons/google.png'
-import logo from '@/assets/icons/logo.png'
-import image from '@/assets/images/bg.png'
 import { useLogin } from '@/src/app/(auth)/login/useLogin'
 import { Button } from '@/src/components/ui/button'
+import woman from '@/assets/images/woman.png'
 
 export default function LoginScreen() {
   const { actions } = useLogin()
 
   return (
-    <ImageBackground
-      source={image}
-      resizeMode="cover"
-      className="flex-1 bg-brand-primary-2 items-center justify-center"
+    <View
+      className="flex-1 bg-brand-grey-10 items-center justify-center"
     >
       <View className="w-full flex-1 items-center justify-center">
-        <Image source={logo} resizeMode="cover" className="mb-10" />
-        <View className="bg-white py-10 px-4 w-96 rounded-xl">
+        <Image source={woman} resizeMode="cover" className="mt-10" />
+        <View className="pb-10 px-4 w-96">
           <View className="flex gap-2 mb-4">
-            <Text className="text-center font-bold text-lg text-brand-primary-1">
-              Acesse sua conta!
-            </Text>
-            <Text className="text-center text-brand-gray-1">
-              Seu app de leitura para criar hábito e muitas conquistas
+            <Text className="text-center font-bold text-3xl text-brand-primary-10">
+              Já sou usuário Inova
             </Text>
           </View>
 
           <View className="flex justify-between gap-4">
             <TextInput
-              className="border border-brand-gray-1 w-full h-14 px-4 py-2 rounded-lg"
+              className="border border-white w-full h-14 px-4 py-2 rounded-lg"
               placeholder="e-mail"
+              placeholderTextColor="#FFFFFF"
+              style={styles.input}
             />
             <TextInput
-              className="border border-brand-gray-1 w-full h-14 px-4 py-2 rounded-lg"
+              className="border border-white w-full h-14 px-4 py-2 rounded-lg"
               placeholder="senha"
+              placeholderTextColor="#FFFFFF"
+              style={styles.input}
             />
           </View>
 
-          <Text className="underline text-center text-brand-secondary-2 mt-4 mb-6">
-            Esqueci minha senha
+          <Text className="underline text-brand-primary-8 text-center text-brand-secondary-2 mt-4 mb-6">
+            Esqueceu sua senha? Recupere aqui
           </Text>
 
           <Button
@@ -46,15 +44,21 @@ export default function LoginScreen() {
             text="Entrar"
             variant="primary"
           />
-          <View className="w-full border-[0.5px] border-brand-gray-2 my-8" />
+          <View className="w-full border-[0.5px] border-white my-8" />
           <Button icon={google} text="Entrar com Google" variant="social" />
 
-          <Text className="text-center mt-6 text-brand-gray-1">
+          <Text className="text-center mt-6 text-white">
             Não tem conta ?
-            <Text className="underline text-brand-primary-1"> Cadastre-se</Text>
+            <Text className="underline text-brand-primary-8"> Cadastre-se</Text>
           </Text>
         </View>
       </View>
-    </ImageBackground>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  input: {
+    color: 'white',
+  }
+})

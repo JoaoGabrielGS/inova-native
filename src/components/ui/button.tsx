@@ -4,7 +4,7 @@ interface ButtonProps {
   text: string
   onPress?: () => void
   icon?: any
-  variant?: 'primary' | 'outline' | 'social'
+  variant?: 'primary' | 'outline' | 'social' | 'icon'
   loading?: boolean
   disabled?: boolean
   className?: string
@@ -18,12 +18,13 @@ export function Button({
   loading = false
 }: ButtonProps) {
   const baseStyles =
-    'w-full h-14 rounded-3xl flex-row items-center justify-center gap-3 active:opacity-80'
+    'w-full h-14 rounded-lg flex-row items-center justify-center gap-3 active:opacity-80'
 
   const variants = {
-    primary: 'bg-brand-complementary-2 border border-dark-1',
+    primary: 'bg-brand-primary-10 border border-dark-1',
     outline: 'border border-brand-dark-1 bg-white',
-    social: 'border border-brand-primary-1 bg-white'
+    social: 'border border-brand-primary-1 bg-white',
+    icon: 'border border-white !w-12 pl-4 bg-transparent'
   }
 
   return (
@@ -39,13 +40,13 @@ export function Button({
       ) : (
         <>
           {icon && (
-            <Image source={icon} className="w-6 h-6" resizeMode="contain" />
+            <Image source={icon} className="w-8 h-8" resizeMode="contain" />
           )}
           <Text
             className={`text-lg font-bold ${
               variant === 'primary'
-                ? 'text-brand-dark-1'
-                : 'text-brand-primary-2'
+                ? 'text-white'
+                : 'text-black'
             }`}
           >
             {text}
