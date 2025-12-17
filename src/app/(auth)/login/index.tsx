@@ -1,16 +1,16 @@
-import { Image, StyleSheet, Text, TextInput, View } from 'react-native'
-import google from '@/assets/icons/google.png'
-import { useLogin } from '@/src/app/(auth)/login/useLogin'
-import { Button } from '@/src/components/ui/button'
-import woman from '@/assets/images/woman.png'
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import google from "@/assets/icons/google.png";
+import { useLogin } from "@/src/app/(auth)/login/useLogin";
+import { Button } from "@/src/components/ui/button";
+import woman from "@/assets/images/woman.png";
+import { useRouter } from "expo-router";
 
 export default function LoginScreen() {
-  const { actions } = useLogin()
+  const { actions } = useLogin();
+  const router = useRouter();
 
   return (
-    <View
-      className="flex-1 bg-brand-grey-10 items-center justify-center"
-    >
+    <View className="flex-1 bg-brand-grey-10 items-center justify-center">
       <View className="w-full flex-1 items-center justify-center">
         <Image source={woman} resizeMode="cover" className="mt-10" />
         <View className="pb-10 px-4 w-96">
@@ -49,16 +49,21 @@ export default function LoginScreen() {
 
           <Text className="text-center mt-6 text-white">
             Não tem conta ?
-            <Text className="underline text-brand-primary-8"> Cadastre-se</Text>
+            <Text
+              className="underline text-brand-primary-8"
+              onPress={() => router.push("/register")}
+            >
+              Cadastre-se
+            </Text>
           </Text>
         </View>
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   input: {
-    color: 'white',
-  }
-})
+    color: "white",
+  },
+});
