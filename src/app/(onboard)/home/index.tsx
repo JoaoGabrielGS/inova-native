@@ -27,8 +27,9 @@ const RECORD_DATA: RecordData[] = [
 
 export default function HomeScreen() {
   return (
-    <View className="flex flex-1 bg-white px-6">
-      <View className="py-10">
+    <View className="flex flex-1 bg-brand-grey-10 px-6">
+      <Text className="text-white">Meus Cursos</Text>
+      {/* <View className="py-10">
         <Text className="text-brand-dark-1 text-base">SEUS RECORDES</Text>
 
         <View className="flex-row my-1">
@@ -53,7 +54,7 @@ export default function HomeScreen() {
         />
       </View>
 
-      <ClubRecordList />
+      <ClubRecordList /> */}
     </View>
   )
 }

@@ -48,12 +48,12 @@ export default function LoginScreen() {
           <Button icon={google} text="Entrar com Google" variant="social" />
 
           <Text className="text-center mt-6 text-white">
-            Não tem conta ?
+            Não tem conta?
             <Text
               className="underline text-brand-primary-8"
-              onPress={() => router.push("/register")}
+              onPress={() => router.navigate("/(auth)/register")}
             >
-              Cadastre-se
+              {' '}Cadastre-se
             </Text>
           </Text>
         </View>
