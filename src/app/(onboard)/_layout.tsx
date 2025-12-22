@@ -19,7 +19,8 @@ export default function OnboardLayout() {
         tabBarStyle: {
           display: "flex",
           height: 90,
-          backgroundColor: "#E65100",
+          borderTopWidth: 0,
+          backgroundColor: "#212121",
           ...Platform.select({
             ios: {
               shadowColor: "black",

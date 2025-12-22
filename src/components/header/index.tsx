@@ -1,4 +1,4 @@
-import { Dimensions, Image, ImageBackground, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const CONTENT_HEIGHT = 80
@@ -15,8 +15,8 @@ export function TabHeader({ layout }: TabHeaderProps) {
 
   return (
     <View
-      style={{ height: totalHeaderHeight }}
-      className="w-full bg-brand-primary-10"
+      style={[{ height: totalHeaderHeight }, styles.headerShadow]}
+      className="w-full bg-brand-grey-10"
     >
       <View
         style={{ height: CONTENT_HEIGHT, marginTop: insets.top }}
@@ -43,3 +43,19 @@ export function TabHeader({ layout }: TabHeaderProps) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  headerShadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+
+    elevation: 10,
+
+    zIndex: 99,
+  },
+})
