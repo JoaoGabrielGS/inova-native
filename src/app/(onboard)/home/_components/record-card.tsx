@@ -41,7 +41,7 @@ export function MyCourseCard({
 
         <View className='flex-row items-center gap-2 mt-2'>
           <ProgressBar progress={course.progress.progressPercentage} />
-          <Text className='text-white'>{course.progress.progressPercentage}%</Text>
+          <Text className='text-white'>{Math.round(course.progress.progressPercentage)}%</Text>
         </View>
 
         <View className='mt-6 gap-3'>
