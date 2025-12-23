@@ -2,8 +2,8 @@ import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
 import { Tabs } from "expo-router";
 import { Platform } from "react-native";
 import { TabHeader } from "@/src/components/header";
-import { HomeIcon } from "@/src/components/icons/home";
 import { ProfileIcon } from "@/src/components/icons/profile";
+import { BookshelfIcon } from "@/src/components/icons/bookshelf";
 
 export default function OnboardLayout() {
   return (
@@ -48,7 +48,7 @@ export default function OnboardLayout() {
         options={{
           title: "Início",
           tabBarIcon: ({ color, focused }) => (
-            <HomeIcon size={28} color={color} isFill={focused} />
+            <BookshelfIcon size={28} color={color} isFill={focused} />
           ),
         }}
       />

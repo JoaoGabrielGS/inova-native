@@ -21,8 +21,8 @@ export function Button({
     'w-full h-14 rounded-lg flex-row items-center justify-center gap-3 active:opacity-80'
 
   const variants = {
-    primary: 'bg-brand-primary-10 border border-dark-1',
-    outline: 'border border-brand-dark-1 bg-white',
+    primary: 'bg-brand-primary-10',
+    outline: 'border border-white bg-transparent',
     social: 'border border-brand-primary-1 bg-white',
     icon: 'border border-white !w-12 pl-4 bg-transparent'
   }
@@ -43,11 +43,10 @@ export function Button({
             <Image source={icon} className="w-8 h-8" resizeMode="contain" />
           )}
           <Text
-            className={`text-lg font-bold ${
-              variant === 'primary'
-                ? 'text-white'
-                : 'text-black'
-            }`}
+            className={`text-lg font-bold ${variant === 'primary' || variant === 'outline'
+              ? 'text-white'
+              : 'text-black'
+              }`}
           >
             {text}
           </Text>
