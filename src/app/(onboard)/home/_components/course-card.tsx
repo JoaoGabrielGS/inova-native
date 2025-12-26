@@ -6,6 +6,7 @@ import { Clock3Icon } from 'lucide-react-native'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import play from "@/assets/icons/play.png"
 import receipt from "@/assets/icons/receipt.png"
+import { useRouter } from 'expo-router'
 
 export interface MyCourseCardProps {
   course: PurchasedCoursesResponse
@@ -14,6 +15,8 @@ export interface MyCourseCardProps {
 export function MyCourseCard({
   course
 }: MyCourseCardProps) {
+  const router = useRouter()
+
   return (
     <View className="rounded-xl w-full bg-brand-grey-9 p-0 mb-6 overflow-hidden" style={styles.card}>
 

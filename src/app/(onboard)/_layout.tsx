@@ -46,7 +46,7 @@ export default function OnboardLayout() {
       <Tabs.Screen
         name="home/index"
         options={{
-          title: "Início",
+          title: "Cursos",
           tabBarIcon: ({ color, focused }) => (
             <BookshelfIcon size={28} color={color} isFill={focused} />
           ),
@@ -56,6 +56,7 @@ export default function OnboardLayout() {
         name="profile/index"
         options={{
           title: "Conta",
+          headerShown: false,
           tabBarIcon: ({ color, focused }) => (
             <ProfileIcon size={28} color={color} isFill={focused} />
           ),
