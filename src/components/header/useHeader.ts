@@ -1,3 +1,4 @@
+import useProfile from "@/src/_hooks/useProfile";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { useState } from "react";

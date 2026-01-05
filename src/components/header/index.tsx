@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import {
   Image,
   StyleSheet,
@@ -9,74 +9,74 @@ import {
   Pressable,
   Animated,
   Dimensions,
-} from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useState, useRef, useEffect } from 'react'
-import { useRouter, usePathname } from 'expo-router'
+} from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useState, useRef, useEffect } from "react";
+import { useRouter, usePathname } from "expo-router";
 
-const CONTENT_HEIGHT = 80
+const CONTENT_HEIGHT = 80;
 
-import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs'
-import PROFILE_IMAGE from '@/assets/images/profile.png'
-import inova from '@/assets/icons/inova.png'
-import { BookshelfIcon } from '../icons/bookshelf'
-import { ProfileIcon } from '../icons/profile'
-import { LogOutIcon } from '../icons/logout'
-import useHeader from './useHeader'
+import { BottomTabHeaderProps } from "@react-navigation/bottom-tabs";
+import inova from "@/assets/icons/inova.png";
+import { BookshelfIcon } from "../icons/bookshelf";
+import { ProfileIcon } from "../icons/profile";
+import { LogOutIcon } from "../icons/logout";
+import useHeader from "./useHeader";
+import useProfile from "@/src/_hooks/useProfile";
 
-interface TabHeaderProps extends BottomTabHeaderProps { }
+interface TabHeaderProps extends BottomTabHeaderProps {}
 
 function SideMenu({
   isVisible,
   onClose,
 }: {
-  isVisible: boolean
-  onClose: () => void
+  isVisible: boolean;
+  onClose: () => void;
 }) {
-  const router = useRouter()
-  const pathname = usePathname()
-  const insets = useSafeAreaInsets()
-  const { width } = Dimensions.get('window')
-  const menuWidth = width * 0.8
-  const position = useRef(new Animated.Value(menuWidth)).current
-  const [modalVisible, setModalVisible] = useState(isVisible)
+  const router = useRouter();
+  const pathname = usePathname();
+  const insets = useSafeAreaInsets();
+  const { width } = Dimensions.get("window");
+  const menuWidth = width * 0.8;
+  const position = useRef(new Animated.Value(menuWidth)).current;
+  const [modalVisible, setModalVisible] = useState(isVisible);
 
-  const { logout } = useHeader()
+  const { logout } = useHeader();
 
-  const BRAND_PRIMARY_10 = '#E65100'
-  const WHITE = '#FFFFFF'
+  const BRAND_PRIMARY_10 = "#E65100";
+  const WHITE = "#FFFFFF";
 
   useEffect(() => {
     if (isVisible) {
-      setModalVisible(true)
+      setModalVisible(true);
       Animated.timing(position, {
         toValue: 0,
         duration: 300,
         useNativeDriver: true,
-      }).start()
+      }).start();
     } else {
       Animated.timing(position, {
         toValue: menuWidth,
         duration: 300,
         useNativeDriver: true,
       }).start(() => {
-        setModalVisible(false)
-      })
+        setModalVisible(false);
+      });
     }
-  }, [isVisible, menuWidth, position])
+  }, [isVisible, menuWidth, position]);
 
   const handleClose = () => {
     if (isVisible) {
-      onClose()
+      onClose();
     }
-  }
+  };
 
   if (!modalVisible) {
-    return null
+    return null;
   }
 
-  const isHomeFocused = pathname === '/home'
-  const isProfileFocused = pathname === '/profile'
+  const isHomeFocused = pathname === "/home";
+  const isProfileFocused = pathname === "/profile";
 
   return (
     <Modal
@@ -96,10 +96,10 @@ function SideMenu({
           },
         ]}
       >
-        <View className='flex-col h-full'>
-          <View className='flex-1'>
+        <View className="flex-col h-full">
+          <View className="flex-1">
             <TouchableOpacity
-              onPress={() => router.push('/home')}
+              onPress={() => router.push("/home")}
               style={styles.menuItem}
             >
               <View className="flex-row items-center gap-4">
@@ -119,7 +119,7 @@ function SideMenu({
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => router.push('/profile')}
+              onPress={() => router.push("/profile")}
               style={styles.menuItem}
             >
               <View className="flex-row items-center gap-4">
@@ -139,15 +139,9 @@ function SideMenu({
               </View>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            onPress={() => logout()}
-            style={styles.menuItem}
-          >
+          <TouchableOpacity onPress={() => logout()} style={styles.menuItem}>
             <View className="flex-row items-center gap-4">
-              <LogOutIcon
-                size={28}
-                color={WHITE}
-              />
+              <LogOutIcon size={28} color={WHITE} />
               <Text
                 style={[
                   styles.menuText,
@@ -161,13 +155,14 @@ function SideMenu({
         </View>
       </Animated.View>
     </Modal>
-  )
+  );
 }
 
 export function TabHeader({ layout }: TabHeaderProps) {
-  const insets = useSafeAreaInsets()
-  const totalHeaderHeight = CONTENT_HEIGHT + insets.top
-  const [isMenuOpen, setMenuOpen] = useState(false)
+  const insets = useSafeAreaInsets();
+  const totalHeaderHeight = CONTENT_HEIGHT + insets.top;
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const { profileData } = useProfile();
 
   return (
     <>
@@ -182,12 +177,12 @@ export function TabHeader({ layout }: TabHeaderProps) {
           <View className="flex-row items-center">
             <View className="flex-1 flex-row items-center">
               <Image
-                source={PROFILE_IMAGE}
+                src={profileData?.avatarUrl}
                 className="w-16 h-16 rounded-full border-2 border-white"
               />
               <View className="ml-3">
                 <Text className="text-xl font-bold text-white">
-                  Filipe Torres
+                  {profileData?.name}
                 </Text>
               </View>
             </View>
@@ -199,12 +194,12 @@ export function TabHeader({ layout }: TabHeaderProps) {
       </View>
       <SideMenu isVisible={isMenuOpen} onClose={() => setMenuOpen(false)} />
     </>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
   headerShadow: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 4,
@@ -218,14 +213,14 @@ const styles = StyleSheet.create({
   },
   modalBackdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.5)',
+    backgroundColor: "rgba(0,0,0,0.5)",
     zIndex: 1,
   },
   menuContainer: {
-    height: '100%',
-    backgroundColor: '#212121',
+    height: "100%",
+    backgroundColor: "#212121",
     padding: 20,
-    position: 'absolute',
+    position: "absolute",
     top: 0,
     bottom: 0,
     right: 0,
@@ -235,7 +230,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   menuText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
   },
-})
+});
