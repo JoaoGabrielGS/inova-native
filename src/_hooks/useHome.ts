@@ -7,11 +7,17 @@ const useHome = () => {
   const [page, setPage] = useState(0);
   const size = 10;
   const [search, setSearch] = useState("");
+  const [confirmedSearch, setConfirmedSearch] = useState("");
 
   const { data: courses, isLoading } = useQuery({
     queryFn: () => courseService.purchased({ page, size, search }),
-    queryKey: [QUERIES.COURSE.PURCHASED, search, page],
+    queryKey: [QUERIES.COURSE.PURCHASED, page, confirmedSearch],
   });
+
+  const handleSearch = () => {
+    setPage(0);
+    setConfirmedSearch(search);
+  };
 
   return {
     states: {
@@ -21,10 +27,13 @@ const useHome = () => {
       courses: courses?.content,
       totalElements: courses?.totalElements,
       isLoading,
+      confirmedSearch,
     },
     actions: {
       setPage,
       setSearch,
+      setConfirmedSearch,
+      handleSearch,
     },
   };
 };

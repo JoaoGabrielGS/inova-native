@@ -1,25 +1,27 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useSegments } from 'expo-router';
-import { useEffect } from 'react';
-import { Image, ScrollView } from 'react-native';
+import { ActivityIndicator, Image, ScrollView } from 'react-native';
 import { Text, View } from 'react-native'
-import PROFILE_IMAGE from '@/assets/images/profile.png'
 import useProfile from '@/src/_hooks/useProfile';
 
 export default function ProfileScreen() {
-  const segments = useSegments();
   const { isLoading, profileData } = useProfile();
 
-  useEffect(() => {
+  if (isLoading) {
+    return (
+      <View className="flex-1 bg-brand-grey-10 justify-center items-center">
+        <ActivityIndicator size="large" color="#ffffff" />
+      </View>
+    );
+  }
 
-    const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('@inova:refreshToken');
-      console.log(token)
-      console.log('2', segments)
-    }
+  // 2. Só renderiza o ScrollView se profileData existir
+  if (!profileData) {
+    return (
+      <View className="flex-1 bg-brand-grey-10 justify-center items-center">
+        <Text className="text-white">Nenhum dado encontrado.</Text>
+      </View>
+    );
+  }
 
-    checkAuth();
-  }, [segments])
   return (
     <ScrollView className="flex-1 bg-brand-grey-10 py-20 p-2">
       <View>
@@ -84,21 +86,21 @@ export default function ProfileScreen() {
         <View className="my-4 ">
           <Text className='text-left mb-2 text-white '>Gênero</Text>
           <View className='bg-brand-grey-8 w-full p-4 rounded-md'>
-            <Text className='text-white '>{profileData?.gender.name}</Text>
+            <Text className='text-white '>{profileData?.gender?.name ?? 'Não Informado'}</Text>
           </View>
         </View>
 
         <View className="my-4 ">
           <Text className='text-left mb-2 text-white '>Raça</Text>
           <View className='bg-brand-grey-8 w-full p-4 rounded-md'>
-            <Text className='text-white '>{profileData?.race.name}</Text>
+            <Text className='text-white '>{profileData?.race?.name ?? 'Não Informado'}</Text>
           </View>
         </View>
 
         <View className="my-4 ">
           <Text className='text-left mb-2 text-white '>PCD</Text>
           <View className='bg-brand-grey-8 w-full p-4 rounded-md'>
-            <Text className='text-white '>{profileData?.hasDisabilities}</Text>
+            <Text className='text-white '>{profileData?.hasDisabilities ? 'Sim' : 'Não'}</Text>
           </View>
         </View>
 

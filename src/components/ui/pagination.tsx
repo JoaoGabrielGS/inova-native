@@ -1,11 +1,10 @@
-// src/components/ui/pagination.tsx
 import { View, Text, TouchableOpacity } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 
 type PaginationProps = {
-    page: number;              // página atual (começa em 0)
-    totalElements: number;     // total de itens
-    size: number;              // itens por página
+    page: number;
+    totalElements: number;
+    size: number;
     onPageChange: (newPage: number) => void;
 };
 
@@ -16,7 +15,7 @@ export function Pagination({
     onPageChange,
 }: PaginationProps) {
     const totalPages = Math.ceil(totalElements / size);
-    const currentPage = page + 1; // para exibir 1-based
+    const currentPage = page + 1;
 
     if (totalPages <= 1) return null;
 
@@ -28,7 +27,6 @@ export function Pagination({
         if (page < totalPages - 1) onPageChange(page + 1);
     };
 
-    // Gera array de páginas visíveis (máximo 5 páginas no centro)
     const getVisiblePages = () => {
         const delta = 2;
         const range = [];
@@ -72,7 +70,6 @@ export function Pagination({
                 <ChevronLeft size={24} color="#fff" />
             </TouchableOpacity>
 
-            {/* Páginas */}
             {pages.map((pageNum, index) => {
                 if (pageNum === '...') {
                     return (
@@ -98,7 +95,6 @@ export function Pagination({
                 );
             })}
 
-            {/* Próximo */}
             <TouchableOpacity
                 onPress={handleNext}
                 disabled={page >= totalPages - 1}
