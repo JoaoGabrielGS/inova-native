@@ -22,4 +22,8 @@ export namespace QUERIES {
   export enum PROFILE {
     GET = "Q_GET_PROFILE",
   }
+  export enum DOCUMENT {
+    SENT = "Q_DOCUMENT_SENT",
+    USER_STATUS = "Q_DOCUMENT_USER_STATUS",
+  }
 }

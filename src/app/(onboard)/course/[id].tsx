@@ -1,12 +1,15 @@
 "use client";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useCourseDetails } from "./useCourseDetails";
-import { FavoriteButton } from "./components/favorite-button";
+import { FavoriteButton } from "../../../components/course/favorite-button";
 import { ArrowLeft } from "lucide-react-native";
-import { FeedbackDialog } from "./components/feedback-dialog";
+import { FeedbackDialog } from "../../../components/course/feedback-dialog";
 import { useCourseFeedBack } from "@/src/_hooks/useCourseFeedback";
 import { useState } from "react";
+import { CourseDetailCard } from "@/src/components/course/course-detail-card";
+import Splash from "@/src/components/splash";
+import DocumentationCard from "@/src/components/course/documentation-card";
 
 export default function CourseDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -15,8 +18,12 @@ export default function CourseDetailsScreen() {
   const [rating] = useState(0);
   const { feedbackstars } = useCourseFeedBack(rating, Number(id));
 
+  if (isLoadingCourseDetail) {
+    return <Splash />;
+  }
+
   return (
-    <View className="flex-1 bg-brand-grey-10 p-4">
+    <ScrollView className="flex-1 bg-brand-grey-10 p-4">
       <View className="flex-row justify-between items-center">
         <Pressable
           className="p-2 border border-white rounded-md"
@@ -42,9 +49,13 @@ export default function CourseDetailsScreen() {
         />
       )}
 
-      <Text className="text-white text-lg mt-2">
-        ID do Curso: {courseDetail?.course?.title}
-      </Text>
-    </View>
+      <View className="mt-6">
+        {courseDetail && <CourseDetailCard courseDetail={courseDetail} />}
+      </View>
+
+      {courseDetail?.course?.type?.name === "PÓS-GRADUAÇÃO" && (
+        <DocumentationCard course={courseDetail.course} />
+      )}
+    </ScrollView>
   );
 }
