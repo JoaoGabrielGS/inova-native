@@ -53,6 +53,13 @@ export default function OnboardLayout() {
         }}
       />
       <Tabs.Screen
+        name="course/[id]"
+        options={{
+          href: null,
+          headerShown: true,
+        }}
+      />
+      <Tabs.Screen
         name="profile/index"
         options={{
           title: "Conta",

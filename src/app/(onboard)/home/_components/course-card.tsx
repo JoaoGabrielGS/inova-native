@@ -58,9 +58,19 @@ export function MyCourseCard({ course }: MyCourseCardProps) {
           <Button
             text="Assistir Aulas"
             icon={play}
-            onPress={() => router.push(`/(onboard)/course/consumption`)}
+            onPress={() =>
+              router.push({
+                pathname: "/(onboard)/course/[id]",
+                params: { id: course.id },
+              })
+            }
           />
-          <Button text="Ver Detalhes" variant="outline" icon={receipt} />
+          <Button
+            text="Ver Detalhes"
+            variant="outline"
+            icon={receipt}
+            onPress={() => router.push(`/(onboard)/course/${course.id}`)}
+          />
         </View>
       </View>
     </View>
