@@ -88,10 +88,9 @@ export function CourseDetailCard({ courseDetail }: CurseDetailCardProps) {
             text="Assistir Aulas"
             icon={play}
             onPress={() =>
-              router.push({
-                pathname: "/(onboard)/course/[id]",
-                params: { id: courseDetail.course?.id ?? 0 },
-              })
+              router.push(
+                `/(onboard)/course/${courseDetail.course?.id}/consumption/${courseDetail.enrollment?.id}`,
+              )
             }
           />
         </View>
