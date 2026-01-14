@@ -13,7 +13,12 @@
 //   DisciplineTrigger,
 // } from "../accordions/discipline";
 // import { ClassGrid, ClassItem } from "../grids/class-grid";
-// import useLearnSidebar from "@/src/_hooks/useLearnSidebar";
+// import {
+//   selectedLessonAtom,
+//   useLearnSidebar,
+// } from "@/src/_hooks/useLearnSidebar";
+// import { CourseConsumptionLesson } from "@/src/services/courses/consumption";
+// import { useAtom } from "jotai";
 
 // const LearnSidebar = () => {
 //   const {
@@ -46,6 +51,10 @@
 //       setOpenModuleId,
 //     },
 //   } = useLearnSidebar(enrollment, show, enrollment.id);
+
+//   const [selectedClass] = useAtom<CourseConsumptionLesson | null>(
+//     selectedLessonAtom,
+//   );
 
 //   return (
 //     <View className="w-full gap-4 px-4">

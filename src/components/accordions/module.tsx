@@ -6,10 +6,9 @@ import {
   AccordionTriggerNative,
   AccordionContent,
 } from "../ui/accordionSidebar";
-import { Separator } from "../ui/separator";
 import { cn } from "@/src/lib/utils";
+import Separator from "../ui/separator";
 
-// --- Module (Root) ---
 const Module = ({ className, children, ...props }: any) => {
   return (
     <Accordion

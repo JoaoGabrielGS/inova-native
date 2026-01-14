@@ -23,7 +23,6 @@ const CourseConsumptionScreen = () => {
         </Text>
         <StudentProgress progress={100} />
         <View className="items-center justify-center">
-          {/* Botão Flutuante (Trigger) */}
           <TouchableOpacity
             onPress={() => setIsOpen(true)}
             className="absolute right-4 top-40 h-10 w-10 items-center justify-center rounded bg-slate-800"
@@ -31,7 +30,6 @@ const CourseConsumptionScreen = () => {
             <ChevronLeft size={24} color="white" />
           </TouchableOpacity>
 
-          {/* Sheet Content (Modal) */}
           <Modal
             animationType="slide"
             transparent={true}
@@ -39,13 +37,11 @@ const CourseConsumptionScreen = () => {
             onRequestClose={() => setIsOpen(false)}
           >
             <View className="flex-1 flex-row justify-end bg-black/50">
-              {/* Área para fechar ao clicar fora */}
               <TouchableOpacity
                 className="flex-1"
                 onPress={() => setIsOpen(false)}
               />
 
-              {/* O "Sheet" propriamente dito */}
               <View className="h-full w-[85%] bg-brand-grey-10 p-4 shadow-lg">
                 <View className="mb-4 flex-row items-center justify-between">
                   <Text className="text-lg font-bold text-gray-400">

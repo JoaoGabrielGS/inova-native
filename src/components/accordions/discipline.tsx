@@ -7,8 +7,8 @@ import {
   AccordionTriggerNative,
   AccordionContent,
 } from "../ui/accordionSidebar";
-import { Separator } from "../ui/separator";
 import { cn } from "@/src/lib/utils";
+import Separator from "../ui/separator";
 
 const Discipline = ({ className, children, ...props }: any) => {
   return (
