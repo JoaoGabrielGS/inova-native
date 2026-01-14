@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTriggerNative,
   AccordionContent,
-} from "../ui/accordion";
+} from "../ui/accordionSidebar";
 import { Separator } from "../ui/separator";
 import { cn } from "@/src/lib/utils";
 
