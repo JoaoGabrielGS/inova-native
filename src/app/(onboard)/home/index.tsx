@@ -1,14 +1,19 @@
-'use client';
-
-import { Linking, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
-import { useRouter } from 'expo-router';
-import useHome from '../../../_hooks/useHome';
-import { MyCourseCard } from './_components/course-card';
-import { PurchasedCoursesResponse } from '@/src/services/courses/purchased';
-import Splash from '@/src/components/splash';
-import { Button } from '@/src/components/ui/button';
-import { Pagination } from '@/src/components/ui/pagination';
-import { Search } from 'lucide-react-native';
+import {
+  Linking,
+  Pressable,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { useRouter } from "expo-router";
+import useHome from "../../../_hooks/useHome";
+import { MyCourseCard } from "../../../components/course/course-card";
+import { PurchasedCoursesResponse } from "@/src/services/courses/purchased";
+import Splash from "@/src/components/splash";
+import { Button } from "@/src/components/ui/button";
+import { Pagination } from "@/src/components/ui/pagination";
+import { Search } from "lucide-react-native";
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -18,7 +23,7 @@ export default function HomeScreen() {
   } = useHome();
 
   const handleOpenWebsite = () => {
-    Linking.openURL('https://www.inovacarreira.com.br/');
+    Linking.openURL("https://www.inovacarreira.com.br/");
   };
 
   if (isLoading) {
@@ -39,7 +44,10 @@ export default function HomeScreen() {
               autoCapitalize="none"
             />
 
-            <Pressable className='p-4 border border-white rounded-lg' onPress={handleSearch}>
+            <Pressable
+              className="p-4 border border-white rounded-lg"
+              onPress={handleSearch}
+            >
               <Search color="white" size={20} />
             </Pressable>
           </View>
@@ -50,7 +58,8 @@ export default function HomeScreen() {
           ) : (
             <View className="justify-center items-center py-10">
               <Text className="text-center mb-6 text-2xl font-bold text-white">
-                Você não possui nenhum curso! Para adquirir nossos cursos, clique no botão abaixo
+                Você não possui nenhum curso! Para adquirir nossos cursos,
+                clique no botão abaixo
               </Text>
               <Button text="Comprar Cursos!" onPress={handleOpenWebsite} />
             </View>

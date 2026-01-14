@@ -1,5 +1,3 @@
-"use client";
-
 import { api } from "@/src/lib/api-manager";
 
 export const getLearning = async (disciplineId: number): Promise<string[]> => {

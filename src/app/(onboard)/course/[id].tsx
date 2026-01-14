@@ -1,7 +1,6 @@
-"use client";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useCourseDetails } from "./useCourseDetails";
+import { useCourseDetails } from "../../../_hooks/useCourseDetails";
 import { FavoriteButton } from "../../../components/course/favorite-button";
 import { ArrowLeft } from "lucide-react-native";
 import { FeedbackDialog } from "../../../components/course/feedback-dialog";
@@ -10,13 +9,21 @@ import { useState } from "react";
 import { CourseDetailCard } from "@/src/components/course/course-detail-card";
 import Splash from "@/src/components/splash";
 import DocumentationCard from "@/src/components/course/documentation-card";
+import TermsAndContractsDialog from "@/src/components/course/terms-and-contracts-dialog";
+import { AgreementUserTermsResponseDTO } from "@/src/services/agreement-term/user-terms";
 
 export default function CourseDetailsScreen() {
   const { id } = useLocalSearchParams();
-  const { courseDetail, isLoadingCourseDetail } = useCourseDetails(Number(id));
+  const { courseDetail, isLoadingCourseDetail, terms } = useCourseDetails(
+    Number(id),
+  );
   const router = useRouter();
   const [rating] = useState(0);
   const { feedbackstars } = useCourseFeedBack(rating, Number(id));
+
+  const isDisciplineEvaluation =
+    courseDetail?.course?.type?.name === "PROFISSIONALIZANTE" ||
+    courseDetail?.course?.type?.name === "PÓS-GRADUAÇÃO";
 
   if (isLoadingCourseDetail) {
     return <Splash />;
@@ -53,8 +60,18 @@ export default function CourseDetailsScreen() {
         {courseDetail && <CourseDetailCard courseDetail={courseDetail} />}
       </View>
 
-      {courseDetail?.course?.type?.name === "PÓS-GRADUAÇÃO" && (
+      {/* {courseDetail?.course?.type?.name === "PÓS-GRADUAÇÃO" && (
         <DocumentationCard course={courseDetail.course} />
+      )} */}
+
+      <DocumentationCard />
+
+      {isDisciplineEvaluation && courseDetail.enrollment?.id && (
+        <View className="mb-10 mt-6 overflow-hidden lg:hidden">
+          <TermsAndContractsDialog
+            terms={terms?.userAgreementTerms as AgreementUserTermsResponseDTO}
+          />
+        </View>
       )}
     </ScrollView>
   );

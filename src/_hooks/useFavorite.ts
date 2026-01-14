@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import useProfile from "./useProfile";
 import { courseService } from "../services/courses";

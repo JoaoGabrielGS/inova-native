@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, TextInput, View } from "react-native";
 import google from "@/assets/icons/google.png";
-import { useLogin } from "@/src/app/(auth)/login/useLogin";
+import { useLogin } from "@/src/_hooks/useLogin";
 import { Button } from "@/src/components/ui/button";
 import woman from "@/assets/images/woman.png";
 import { useRouter, useSegments } from "expo-router";
@@ -19,14 +19,14 @@ export default function LoginScreen() {
     if (!isFocused) return;
 
     const checkAuth = async () => {
-      const token = await AsyncStorage.getItem('@inova:accessToken');
+      const token = await AsyncStorage.getItem("@inova:accessToken");
       if (token) {
-        router.replace('/(onboard)/home')
+        router.replace("/(onboard)/home");
       }
-    }
+    };
 
     checkAuth();
-  }, [segments])
+  }, [segments]);
 
   return (
     <View className="flex-1 bg-brand-grey-10 items-center justify-center">
@@ -45,7 +45,7 @@ export default function LoginScreen() {
                 name="identifier"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
-                    className={`border w-full h-14 px-4 py-2 rounded-lg ${errors.identifier ? 'border-red-500' : 'border-white'}`}
+                    className={`border w-full h-14 px-4 py-2 rounded-lg ${errors.identifier ? "border-red-500" : "border-white"}`}
                     placeholder="e-mail ou RA"
                     placeholderTextColor="#FFFFFF"
                     onBlur={onBlur}
@@ -56,7 +56,11 @@ export default function LoginScreen() {
                   />
                 )}
               />
-              {errors.identifier && <Text className="text-red-500 text-sm">{errors.identifier.message}</Text>}
+              {errors.identifier && (
+                <Text className="text-red-500 text-sm">
+                  {errors.identifier.message}
+                </Text>
+              )}
             </View>
 
             <View>
@@ -65,7 +69,7 @@ export default function LoginScreen() {
                 name="password"
                 render={({ field: { onChange, onBlur, value } }) => (
                   <TextInput
-                    className={`border w-full h-14 px-4 py-2 rounded-lg ${errors.password ? 'border-red-500' : 'border-white'}`}
+                    className={`border w-full h-14 px-4 py-2 rounded-lg ${errors.password ? "border-red-500" : "border-white"}`}
                     placeholder="senha"
                     placeholderTextColor="#FFFFFF"
                     onBlur={onBlur}
@@ -76,7 +80,11 @@ export default function LoginScreen() {
                   />
                 )}
               />
-              {errors.password && <Text className="text-red-500 text-sm">{errors.password.message}</Text>}
+              {errors.password && (
+                <Text className="text-red-500 text-sm">
+                  {errors.password.message}
+                </Text>
+              )}
             </View>
           </View>
 
@@ -100,7 +108,8 @@ export default function LoginScreen() {
               className="underline text-brand-primary-8"
               onPress={() => router.navigate("/(auth)/register")}
             >
-              {' '}Cadastre-se
+              {" "}
+              Cadastre-se
             </Text>
           </Text>
         </View>
