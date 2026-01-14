@@ -1,9 +1,9 @@
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useCourseDetails } from "../../../_hooks/useCourseDetails";
-import { FavoriteButton } from "../../../components/course/favorite-button";
+import { useCourseDetails } from "../../../../_hooks/useCourseDetails";
+import { FavoriteButton } from "../../../../components/course/favorite-button";
 import { ArrowLeft } from "lucide-react-native";
-import { FeedbackDialog } from "../../../components/course/feedback-dialog";
+import { FeedbackDialog } from "../../../../components/course/feedback-dialog";
 import { useCourseFeedBack } from "@/src/_hooks/useCourseFeedback";
 import { useState } from "react";
 import { CourseDetailCard } from "@/src/components/course/course-detail-card";
