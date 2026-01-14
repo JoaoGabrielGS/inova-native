@@ -50,6 +50,9 @@ module.exports = {
             13: '#FF1744',
             14: '#D50000',
           },
+          pink: {
+            1: '#d8168e',
+          },
           white: {
             1: '#FFFFFF'
           },

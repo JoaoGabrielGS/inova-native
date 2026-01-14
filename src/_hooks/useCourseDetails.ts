@@ -103,5 +103,6 @@ export function useCourseDetails(courseId: number, show?: boolean) {
     isLoadingLessons: lessonsLearningQuery.isLoading,
     lessonsLearning: lessonsLearningQuery.data,
     learning: learningQuery.data,
+    learningLoading: learningQuery.isLoading,
   };
 }

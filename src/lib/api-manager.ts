@@ -41,14 +41,10 @@ const refreshToken = async () => {
         "@inova:accessToken",
         response.data.accessToken,
       );
-
-      if (response.data.refreshToken) {
-        await AsyncStorage.setItem(
-          "@inova:refreshToken",
-          response.data.refreshToken,
-        );
-      }
-
+      await AsyncStorage.setItem(
+        "@inova:refreshToken",
+        response.data.refreshToken,
+      );
       return response.data.accessToken;
     }
   } catch (error) {

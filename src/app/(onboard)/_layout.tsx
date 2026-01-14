@@ -53,7 +53,14 @@ export default function OnboardLayout() {
         }}
       />
       <Tabs.Screen
-        name="course/[id]"
+        name="course/[id]/index"
+        options={{
+          href: null,
+          headerShown: true,
+        }}
+      />
+      <Tabs.Screen
+        name="course/[id]/consumption/[enrollmentId]"
         options={{
           href: null,
           headerShown: true,

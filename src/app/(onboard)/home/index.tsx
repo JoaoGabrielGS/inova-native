@@ -14,9 +14,12 @@ import Splash from "@/src/components/splash";
 import { Button } from "@/src/components/ui/button";
 import { Pagination } from "@/src/components/ui/pagination";
 import { Search } from "lucide-react-native";
+import { useEffect } from "react";
+import useProfile from "@/src/_hooks/useProfile";
 
 export default function HomeScreen() {
   const router = useRouter();
+  const { profileData } = useProfile();
   const {
     states: { courses, isLoading, page, search, size, totalElements },
     actions: { setPage, setSearch, handleSearch },
