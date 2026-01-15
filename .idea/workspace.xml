@@ -5,7 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="94213286-a4f2-4738-9529-58326a9171c5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/_hooks/useLearnSidebar.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/_hooks/useLearnSidebar.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/app/(onboard)/course/[id]/consumption/[enrollmentId].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/(onboard)/course/[id]/consumption/[enrollmentId].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/accordions/module.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/accordions/module.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sidebars/learn-sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sidebars/learn-sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ui/button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ui/button.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

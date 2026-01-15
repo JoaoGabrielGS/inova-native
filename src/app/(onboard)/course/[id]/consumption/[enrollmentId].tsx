@@ -1,71 +1,175 @@
 import useCourseConsumption from "@/src/_hooks/useCourseConsumption";
 import StudentProgress from "@/src/components/course/student-progress";
+import LearnSidebar from "@/src/components/sidebars/learn-sidebar";
+import {
+  CourseConsumptionLesson,
+  CourseConsumptionResponse,
+} from "@/src/services/courses/consumption";
 import { useLocalSearchParams } from "expo-router";
 import { ChevronLeft } from "lucide-react-native";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useAtom } from "jotai";
+import {
+  selectedDisciplineNameAtom,
+  selectedLessonAtom,
+} from "@/src/_hooks/useLearnSidebar";
+import Separator from "@/src/components/ui/separator";
+import { Button } from "@/src/components/ui/button";
+import VideoAndPdfViewer from "@/src/components/ui/mediaViewer";
 
 const CourseConsumptionScreen = () => {
   const { enrollmentId } = useLocalSearchParams();
-  const enrollment = enrollmentId;
   const {
-    states: { course, isOpen },
+    states: { course, isOpen, enrollment },
     actions: { setIsOpen },
   } = useCourseConsumption(Number(enrollmentId));
 
+  const [disciplineName] = useAtom(selectedDisciplineNameAtom);
+  const [selectedLesson] = useAtom(selectedLessonAtom);
+  const [selectedClass, setSelectedClass] =
+    useAtom<CourseConsumptionLesson | null>(selectedLessonAtom);
+
   return (
-    <ScrollView className="flex-1 bg-brand-grey-10">
-      <View className="flex-1 px-4 py-4">
-        <Text
-          numberOfLines={3}
-          className="font-sans text-lg font-bold text-white lg:text-2xl mb-2"
-        >
-          {course?.title}
-        </Text>
-        <StudentProgress progress={100} />
-        <View className="items-center justify-center">
-          <TouchableOpacity
-            onPress={() => setIsOpen(true)}
-            className="absolute right-4 top-40 h-10 w-10 items-center justify-center rounded bg-slate-800"
+    <View className="flex-1 bg-brand-grey-10">
+      <ScrollView>
+        <View className="px-4 py-4">
+          <Text
+            numberOfLines={3}
+            className="font-sans text-lg font-bold text-white lg:text-2xl mb-2"
           >
-            <ChevronLeft size={24} color="white" />
-          </TouchableOpacity>
+            {course?.title}
+          </Text>
+          <StudentProgress progress={100} />
+          <View>
+            <ScrollView className="p-4 bg-brand-grey-20 rounded-lg">
+              {selectedClass && (
+                <View className="lg:mr-20">
+                  <View className="font-sans">
+                    <Text className="text-sm font-bold text-gray-400">
+                      DISCIPLINA:
+                    </Text>
+                    <Text className="text-sm font-bold text-gray-400">
+                      {disciplineName}
+                    </Text>
+                    <Separator className="mt-2" />
+                  </View>
 
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={isOpen}
-            onRequestClose={() => setIsOpen(false)}
-          >
-            <View className="flex-1 flex-row justify-end bg-black/50">
-              <TouchableOpacity
-                className="flex-1"
-                onPress={() => setIsOpen(false)}
-              />
+                  <View className="pt-4">
+                    <Text className="text-xs font-bold text-white uppercase">
+                      Aula:
+                    </Text>
+                    <Text className="text-lg font-bold text-white md:text-xl">
+                      {selectedClass.title}
+                    </Text>
+                    <Separator className="mt-2" />
+                  </View>
 
-              <View className="h-full w-[85%] bg-brand-grey-10 p-4 shadow-lg">
-                <View className="mb-4 flex-row items-center justify-between">
-                  <Text className="text-lg font-bold text-gray-400">
-                    Conteúdo do Curso
-                  </Text>
-                  <TouchableOpacity onPress={() => setIsOpen(false)}>
-                    <Text className="text-white">Fechar</Text>
-                  </TouchableOpacity>
-                </View>
-
-                {/* <ScrollView showsVerticalScrollIndicator={false}>
-                  {course && (
-                    <LearnSidebar
-                      enrollment={enrollment}
-                      show={(course?.type.id === 1 || isSigned) ?? false}
+                  <View className="pt-6">
+                    <VideoAndPdfViewer
+                      content={selectedClass.description || ""}
                     />
-                  )}
-                </ScrollView> */}
-              </View>
-            </View>
-          </Modal>
+                  </View>
+
+                  <View className="pt-10">
+                    <VideoAndPdfViewer content={selectedClass.content || ""} />
+                  </View>
+
+                  <View className="pt-6">
+                    <Button
+                      className={`font-bold ${
+                        selectedClass.watched
+                          ? "bg-green-600 text-white"
+                          : "border-gray-500 text-gray-400"
+                      }`}
+                      variant={selectedClass.watched ? "success" : "outline"}
+                      // onPress={handleCompleteLesson}
+                      disabled={selectedClass.watched}
+                      text="Concluir Aula"
+                    />
+                  </View>
+
+                  <Separator className="my-4" />
+
+                  {/* <View className="mt-6 flex-row items-center justify-between w-full">
+                    <View className="flex-1">
+                      {!isFirstLesson && (
+                        <Button variant="outline" onPress={handlePrevLesson}>
+                          <Text>Aula Anterior</Text>
+                        </Button>
+                      )}
+                    </View>
+
+                    <View className="flex-1 items-center">
+                      <Text className="text-xs font-bold text-gray-400">
+                        Avalie esta aula
+                      </Text>
+                      <StarRatingConsumption
+                        rating={rating}
+                        onRatingSubmit={handleRatingSubmit}
+                        hasRating={!!selectedClass.feedback}
+                      />
+                    </View>
+
+                    <View className="flex-1 items-end">
+                      {!isLastLesson && (
+                        <Button
+                          onPress={handleNextLesson}
+                          disabled={!isNextDisciplineLiberated}
+                        >
+                          <Text>Próxima Aula</Text>
+                        </Button>
+                      )}
+                    </View>
+                  </View> */}
+                </View>
+              )}
+            </ScrollView>
+          </View>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+
+      <TouchableOpacity
+        onPress={() => setIsOpen(true)}
+        className="absolute bottom-4 right-4 z-10 h-12 w-12 items-center justify-center rounded-full bg-brand-blue-8"
+      >
+        <ChevronLeft size={24} color="white" />
+      </TouchableOpacity>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isOpen}
+        onRequestClose={() => setIsOpen(false)}
+      >
+        <View className="flex-1 flex-row justify-end bg-black/50">
+          <TouchableOpacity
+            className="flex-1"
+            onPress={() => setIsOpen(false)}
+          />
+
+          <View className="h-full w-[85%] bg-brand-grey-10 p-4 shadow-lg">
+            <View className="mb-4 flex-row items-center justify-between">
+              <Text className="text-lg font-bold text-gray-400">
+                Conteúdo do Curso
+              </Text>
+              <TouchableOpacity onPress={() => setIsOpen(false)}>
+                <Text className="text-white">Fechar</Text>
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {course && (
+                <LearnSidebar
+                  enrollment={enrollment as CourseConsumptionResponse}
+                  // show={(course?.type.id === 1 || isSigned) ?? false}
+                  show={true}
+                />
+              )}
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 };
 

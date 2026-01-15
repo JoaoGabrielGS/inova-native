@@ -21,7 +21,6 @@ const Module = ({ className, children, ...props }: any) => {
   );
 };
 
-// --- ModuleItem ---
 const ModuleItem = ({ className, children, value, ...props }: any) => {
   return (
     <AccordionItem value={value} className={className} {...props}>
@@ -30,7 +29,6 @@ const ModuleItem = ({ className, children, value, ...props }: any) => {
   );
 };
 
-// --- ModuleTrigger ---
 const ModuleTrigger = ({ children, value, ...props }: any) => {
   return (
     <AccordionTriggerNative variant="module" value={value} {...props}>
@@ -40,7 +38,6 @@ const ModuleTrigger = ({ children, value, ...props }: any) => {
   );
 };
 
-// --- ModuleContent ---
 const ModuleContent = ({ children, value, ...props }: any) => {
   return (
     <AccordionContent variant="module" value={value} {...props}>
