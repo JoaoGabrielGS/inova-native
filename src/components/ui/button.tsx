@@ -1,7 +1,7 @@
 import { ActivityIndicator, Image, Pressable, Text } from "react-native";
 
 interface ButtonProps {
-  text: string;
+  text?: string;
   onPress?: () => void;
   icon?: any;
   variant?: "primary" | "outline" | "social" | "icon" | "success";

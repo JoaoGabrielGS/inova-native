@@ -5,6 +5,7 @@ import { favoritesIds } from "./favorites-ids";
 import { getLearning } from "./get-learning";
 import { getCoursesDetailsById } from "./get_by_id";
 import { purchased } from "./purchased";
+import { ratingLesson } from "./ratingLesson";
 import { unfavorite } from "./unfavorite";
 
 export const courseService = {
@@ -16,4 +17,5 @@ export const courseService = {
   unfavorite,
   consumption,
   canGenerate,
+  ratingLesson,
 };

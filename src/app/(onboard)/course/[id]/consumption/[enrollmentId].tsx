@@ -6,10 +6,11 @@ import {
   CourseConsumptionResponse,
 } from "@/src/services/courses/consumption";
 import { useLocalSearchParams } from "expo-router";
-import { ChevronLeft } from "lucide-react-native";
+import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useAtom } from "jotai";
 import {
+  progressPercentageAtom,
   selectedDisciplineNameAtom,
   selectedLessonAtom,
   useLearnSidebar,
@@ -17,12 +18,25 @@ import {
 import Separator from "@/src/components/ui/separator";
 import { Button } from "@/src/components/ui/button";
 import VideoAndPdfViewer from "@/src/components/ui/mediaViewer";
+import TermsAndContractsRequestDialog from "@/src/components/course/sign-terms-and-contracts-dialog";
+import StarRatingConsumption from "@/src/components/ui/star-rating";
 
 const CourseConsumptionScreen = () => {
   const { enrollmentId } = useLocalSearchParams();
   const {
-    states: { course, isOpen, enrollment, isSigned },
-    actions: { setIsOpen },
+    states: {
+      course,
+      isOpen,
+      enrollment,
+      isSigned,
+      isSignedFetched,
+      isSignedLoading,
+      terms,
+      rating,
+      // isLoadingTerms,
+      // isErrorTerms,
+    },
+    actions: { setIsOpen, handleRatingSubmit },
   } = useCourseConsumption(Number(enrollmentId));
 
   const {
@@ -38,6 +52,7 @@ const CourseConsumptionScreen = () => {
   const [selectedLesson] = useAtom(selectedLessonAtom);
   const [selectedClass, setSelectedClass] =
     useAtom<CourseConsumptionLesson | null>(selectedLessonAtom);
+  const [progressPercentage] = useAtom(progressPercentageAtom);
 
   return (
     <View className="flex-1 bg-brand-grey-10">
@@ -49,7 +64,7 @@ const CourseConsumptionScreen = () => {
           >
             {course?.title}
           </Text>
-          <StudentProgress progress={100} />
+          <StudentProgress progress={progressPercentage} />
           <View>
             <ScrollView className="p-4 bg-brand-grey-20 rounded-lg">
               {selectedClass && (
@@ -101,17 +116,17 @@ const CourseConsumptionScreen = () => {
                   <Separator className="my-4" />
 
                   <View className="mt-6 flex-row items-center justify-between w-full">
-                    <View className="flex-1">
+                    <View className="w-1/5">
                       {!isFirstLesson && (
                         <Button
                           variant="outline"
                           onPress={handlePrevLesson}
-                          text="Aula Anterior"
+                          text="<"
                         />
                       )}
                     </View>
 
-                    {/* <View className="flex-1 items-center">
+                    <View className="flex-1 items-center">
                       <Text className="text-xs font-bold text-gray-400">
                         Avalie esta aula
                       </Text>
@@ -120,14 +135,14 @@ const CourseConsumptionScreen = () => {
                         onRatingSubmit={handleRatingSubmit}
                         hasRating={!!selectedClass.feedback}
                       />
-                    </View> */}
+                    </View>
 
-                    <View className="flex-1 items-end">
+                    <View className="w-1/5 items-end">
                       {!isLastLesson && (
                         <Button
                           onPress={handleNextLesson}
                           disabled={!isNextDisciplineLiberated}
-                          text="Próxima Aula"
+                          text=">"
                         />
                       )}
                     </View>
@@ -179,6 +194,14 @@ const CourseConsumptionScreen = () => {
           </View>
         </View>
       </Modal>
+      {terms && course?.id && course.type.id !== 1 && (
+        <TermsAndContractsRequestDialog
+          terms={terms}
+          isOpen={!isSigned && isSignedFetched}
+          isLoading={isSignedLoading}
+          courseId={course.id}
+        />
+      )}
     </View>
   );
 };
