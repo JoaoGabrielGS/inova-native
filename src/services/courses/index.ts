@@ -2,6 +2,7 @@ import { canGenerate } from "./canGenerate";
 import { consumption } from "./consumption";
 import { favorite } from "./favorite";
 import { favoritesIds } from "./favorites-ids";
+import { getCourseAndDiscipline } from "./get-course-and-discipline";
 import { getLearning } from "./get-learning";
 import { getCoursesDetailsById } from "./get_by_id";
 import { purchased } from "./purchased";
@@ -16,4 +17,5 @@ export const courseService = {
   unfavorite,
   consumption,
   canGenerate,
+  getCourseAndDiscipline,
 };

@@ -22,6 +22,7 @@ import TermsAndContractsDialog from "@/src/components/course/terms-and-contracts
 import { AgreementUserTermsResponseDTO } from "@/src/services/agreement-term/user-terms";
 import Separator from "@/src/components/ui/separator";
 import { Accordion } from "@/src/components/ui/accordion";
+import { Button } from "@/src/components/ui/button";
 
 export default function CourseDetailsScreen() {
   const { id } = useLocalSearchParams();
@@ -93,6 +94,24 @@ export default function CourseDetailsScreen() {
           <FavoriteButton courseId={Number(id)} srOnly={false} />
         </View>
       </View>
+
+      <Button
+        onPress={() =>
+          router.push(
+            `/(onboard)/course/${courseDetail?.course?.id}/consumption/prova/resumo`,
+          )
+        }
+        text="Ir para resumo da prova"
+      />
+
+      <Button
+        onPress={() =>
+          router.push(
+            `/(onboard)/course/${courseDetail?.course?.id}/consumption/prova`,
+          )
+        }
+        text="Ir para prova"
+      />
 
       {courseDetail?.course?.id && courseDetail?.enrollment && (
         <FeedbackDialog

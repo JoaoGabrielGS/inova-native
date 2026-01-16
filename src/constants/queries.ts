@@ -7,6 +7,15 @@ export namespace QUERIES {
     FAVORITES_IDS = "Q_COURSE_FAVORITES_IDS",
     GET_BY_ENROLLMENT_ID = "Q_COURSE_GET_BY_ENROLLMENT_ID",
     CAN_GENERATE = "Q_COURSE_CERTIFICATE",
+    GET = "Q_COURSE_GET",
+  }
+  export enum MODULE {
+    LIST = "Q_MODULE_LIST",
+  }
+  export enum EXAM {
+    GET = "Q_EXAM_GET",
+    ANSWERED = "Q_ANSWERED",
+    GET_BY_ENROLLMENTID = "Q_GET_BY_ENROLLMENTID",
   }
   export enum LESSON {
     LEARNING = "Q_LEARNING",

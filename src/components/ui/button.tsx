@@ -16,6 +16,7 @@ export function Button({
   icon,
   variant = "primary",
   loading = false,
+  disabled = false,
   className,
 }: ButtonProps) {
   const baseStyles =
@@ -34,7 +35,7 @@ export function Button({
     <Pressable
       onPress={onPress}
       disabled={loading}
-      className={`${baseStyles} ${variants[variant]} ${className}`}
+      className={`${baseStyles} ${variants[variant]} ${className} ${disabled ? "opacity-50 pointer-events-none" : ""}`}
       accessibilityRole="button"
       accessibilityLabel={text}
     >
