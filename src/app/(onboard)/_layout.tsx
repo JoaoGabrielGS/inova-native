@@ -60,21 +60,21 @@ export default function OnboardLayout() {
         }}
       />
       <Tabs.Screen
-        name="course/[id]/consumption/[enrollmentId]"
+        name="course/[id]/consumption/[enrollmentId]/index"
         options={{
           href: null,
           headerShown: true,
         }}
       />
       <Tabs.Screen
-        name="course/[id]/consumption/prova/resumo/index"
+        name="course/[id]/consumption/[enrollmentId]/prova/resumo/index"
         options={{
           href: null,
           headerShown: true,
         }}
       />
       <Tabs.Screen
-        name="course/[id]/consumption/prova/index"
+        name="course/[id]/consumption/[enrollmentId]/prova/index"
         options={{
           href: null,
           headerShown: true,

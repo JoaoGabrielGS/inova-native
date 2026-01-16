@@ -98,7 +98,7 @@ export default function CourseDetailsScreen() {
       <Button
         onPress={() =>
           router.push(
-            `/(onboard)/course/${courseDetail?.course?.id}/consumption/prova/resumo`,
+            `/(onboard)/course/${courseDetail?.course?.id}/consumption/${courseDetail?.enrollment?.id}/prova/resumo`,
           )
         }
         text="Ir para resumo da prova"
@@ -107,7 +107,7 @@ export default function CourseDetailsScreen() {
       <Button
         onPress={() =>
           router.push(
-            `/(onboard)/course/${courseDetail?.course?.id}/consumption/prova`,
+            `/(onboard)/course/${courseDetail?.course?.id}/consumption/${courseDetail?.enrollment?.id}/prova`,
           )
         }
         text="Ir para prova"
