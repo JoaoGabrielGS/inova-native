@@ -6,28 +6,53 @@ import {
   CourseConsumptionResponse,
 } from "@/src/services/courses/consumption";
 import { useLocalSearchParams } from "expo-router";
-import { ChevronLeft } from "lucide-react-native";
+import { ChevronLeft, ChevronRight } from "lucide-react-native";
 import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useAtom } from "jotai";
 import {
+  progressPercentageAtom,
   selectedDisciplineNameAtom,
   selectedLessonAtom,
+  useLearnSidebar,
 } from "@/src/_hooks/useLearnSidebar";
 import Separator from "@/src/components/ui/separator";
 import { Button } from "@/src/components/ui/button";
 import VideoAndPdfViewer from "@/src/components/ui/mediaViewer";
+import TermsAndContractsRequestDialog from "@/src/components/course/sign-terms-and-contracts-dialog";
+import StarRatingConsumption from "@/src/components/ui/star-rating";
 
 const CourseConsumptionScreen = () => {
   const { enrollmentId } = useLocalSearchParams();
   const {
-    states: { course, isOpen, enrollment },
-    actions: { setIsOpen },
+    states: {
+      course,
+      isOpen,
+      enrollment,
+      isSigned,
+      isSignedFetched,
+      isSignedLoading,
+      terms,
+      rating,
+      // isLoadingTerms,
+      // isErrorTerms,
+    },
+    actions: { setIsOpen, handleRatingSubmit },
   } = useCourseConsumption(Number(enrollmentId));
+
+  const {
+    states: { isFirstLesson, isLastLesson, isNextDisciplineLiberated },
+    actions: { handleNextLesson, handlePrevLesson, handleCompleteLesson },
+  } = useLearnSidebar(
+    enrollment as CourseConsumptionResponse,
+    true,
+    Number(enrollmentId),
+  );
 
   const [disciplineName] = useAtom(selectedDisciplineNameAtom);
   const [selectedLesson] = useAtom(selectedLessonAtom);
   const [selectedClass, setSelectedClass] =
     useAtom<CourseConsumptionLesson | null>(selectedLessonAtom);
+  const [progressPercentage] = useAtom(progressPercentageAtom);
 
   return (
     <View className="flex-1 bg-brand-grey-10">
@@ -39,7 +64,7 @@ const CourseConsumptionScreen = () => {
           >
             {course?.title}
           </Text>
-          <StudentProgress progress={100} />
+          <StudentProgress progress={progressPercentage} />
           <View>
             <ScrollView className="p-4 bg-brand-grey-20 rounded-lg">
               {selectedClass && (
@@ -82,7 +107,7 @@ const CourseConsumptionScreen = () => {
                           : "border-gray-500 text-gray-400"
                       }`}
                       variant={selectedClass.watched ? "success" : "outline"}
-                      // onPress={handleCompleteLesson}
+                      onPress={handleCompleteLesson}
                       disabled={selectedClass.watched}
                       text="Concluir Aula"
                     />
@@ -90,12 +115,14 @@ const CourseConsumptionScreen = () => {
 
                   <Separator className="my-4" />
 
-                  {/* <View className="mt-6 flex-row items-center justify-between w-full">
-                    <View className="flex-1">
+                  <View className="mt-6 flex-row items-center justify-between w-full">
+                    <View className="w-1/5">
                       {!isFirstLesson && (
-                        <Button variant="outline" onPress={handlePrevLesson}>
-                          <Text>Aula Anterior</Text>
-                        </Button>
+                        <Button
+                          variant="outline"
+                          onPress={handlePrevLesson}
+                          text="<"
+                        />
                       )}
                     </View>
 
@@ -110,17 +137,16 @@ const CourseConsumptionScreen = () => {
                       />
                     </View>
 
-                    <View className="flex-1 items-end">
+                    <View className="w-1/5 items-end">
                       {!isLastLesson && (
                         <Button
                           onPress={handleNextLesson}
                           disabled={!isNextDisciplineLiberated}
-                        >
-                          <Text>Próxima Aula</Text>
-                        </Button>
+                          text=">"
+                        />
                       )}
                     </View>
-                  </View> */}
+                  </View>
                 </View>
               )}
             </ScrollView>
@@ -161,14 +187,21 @@ const CourseConsumptionScreen = () => {
               {course && (
                 <LearnSidebar
                   enrollment={enrollment as CourseConsumptionResponse}
-                  // show={(course?.type.id === 1 || isSigned) ?? false}
-                  show={true}
+                  show={(course?.type.id === 1 || isSigned) ?? false}
                 />
               )}
             </ScrollView>
           </View>
         </View>
       </Modal>
+      {terms && course?.id && course.type.id !== 1 && (
+        <TermsAndContractsRequestDialog
+          terms={terms}
+          isOpen={!isSigned && isSignedFetched}
+          isLoading={isSignedLoading}
+          courseId={course.id}
+        />
+      )}
     </View>
   );
 };

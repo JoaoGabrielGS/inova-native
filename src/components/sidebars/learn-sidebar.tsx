@@ -28,6 +28,7 @@ import { useAtom } from "jotai";
 import ConfirmInitExamDialog from "../modals/confirmInitExam";
 import { Button } from "../ui/button";
 import { router } from "expo-router";
+import HelpersUtils from "@/src/utils/helpers.utils";
 
 interface LearnSidebarProps {
   enrollment: CourseConsumptionResponse;
@@ -38,16 +39,11 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
   const {
     states: {
       course,
-      // isLoadingAgreementTerms,
-      canGenerate,
-      isLoadingCanGenerate,
       isModuleEvaluation,
       isDisciplineEvaluation,
       dropdownOpen,
       isOpen,
       posModalOpen,
-      professionalModalOpen,
-      disciplineAttempt,
       openModuleId,
       openDisciplineId,
     },
@@ -58,8 +54,6 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
       handleSelectLesson,
       verifyAttempts,
       professionalModalAttemptOpen,
-      setPosModalOpen,
-      setProfessionalModalOpen,
       setOpenDisciplineId,
       setOpenModuleId,
     },
@@ -68,6 +62,13 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
   const [selectedClass] = useAtom<CourseConsumptionLesson | null>(
     selectedLessonAtom,
   );
+
+  const allDisiciplinesWatched =
+    course?.modules.every((module) =>
+      module.disciplines.every((disc) =>
+        disc.lessons.every((less) => less.watched),
+      ),
+    ) ?? false;
 
   interface EvaluationButtonProps {
     isCertificateble: boolean;
@@ -225,14 +226,16 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
                             </DisciplineContent>
                           </DisciplineItem>
 
-                          {/* {!discipline.liberated && (
-                        <View className="mt-1 flex-row justify-center bg-red-500/10 p-2 rounded">
-                          <Text className="font-sans text-xs font-bold text-red-500 text-center">
-                            Disciplina liberada dia{' '}
-                            {HelpersUtils.formatDateOutput(discipline.liberationDate)}
-                          </Text>
-                        </View>
-                      )} */}
+                          {!discipline.liberated && (
+                            <View className="mt-1 flex-row justify-center bg-red-500/10 p-2 rounded">
+                              <Text className="font-sans text-xs font-bold text-red-500 text-center">
+                                Disciplina liberada dia{" "}
+                                {HelpersUtils.formatDateOutput(
+                                  discipline.liberationDate,
+                                )}
+                              </Text>
+                            </View>
+                          )}
                         </View>
                       );
                     })}
@@ -243,7 +246,7 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
           })}
         </Module>
 
-        {/* <View className="mt-4 gap-4">
+        <View className="mt-4 gap-4">
           <>
             {isModuleEvaluation &&
               course.modules?.[0]?.hasExam === true &&
@@ -255,7 +258,7 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
                 />
               )}
           </>
-        </View> */}
+        </View>
       </View>
       <ConfirmInitExamDialog
         isOpen={dropdownOpen}
@@ -263,19 +266,6 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
         module={course.modules[0]}
         enrollmentId={enrollment.id}
       />
-      {/* <DependencyRequestDialog
-              isOpen={posModalOpen}
-              onOpenChange={setPosModalOpen}
-              discipline={disciplineAttempt}
-              course={course}
-              enrollmentId={enrollment.id}
-            />
-            <ConfirmInitProfessionalExamDialog
-              isOpen={professionalModalOpen}
-              onOpenChange={setProfessionalModalOpen}
-              discipline={disciplineAttempt}
-              enrollmentId={enrollment.id}
-            /> */}
     </View>
   );
 };
