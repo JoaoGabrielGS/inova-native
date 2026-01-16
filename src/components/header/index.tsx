@@ -22,6 +22,7 @@ import { ProfileIcon } from "../icons/profile";
 import { LogOutIcon } from "../icons/logout";
 import useHeader from "./useHeader";
 import useProfile from "@/src/_hooks/useProfile";
+import { getColor, getInitials } from "@/src/lib/utils";
 
 interface TabHeaderProps extends BottomTabHeaderProps {}
 
@@ -175,12 +176,33 @@ export function TabHeader({ layout }: TabHeaderProps) {
         >
           <View className="flex-row items-center">
             <View className="flex-1 flex-row items-center">
-              <Image
-                src={profileData?.avatarUrl}
-                className="w-16 h-16 rounded-full border-2 border-white"
-              />
-              <View className="ml-3">
-                <Text className="text-xl font-bold text-white">
+              {profileData?.avatarUrl ? (
+                <Image
+                  source={{ uri: profileData.avatarUrl }}
+                  className="w-16 h-16 rounded-full border-2 border-white"
+                />
+              ) : (
+                <View
+                  style={{
+                    backgroundColor: getColor(profileData?.id),
+                    width: 64,
+                    height: 64,
+                    borderRadius: 32,
+                    borderWidth: 1,
+                    borderColor: "white",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{ color: "white", fontWeight: "bold", fontSize: 20 }}
+                  >
+                    {profileData?.name ? getInitials(profileData.name) : ""}
+                  </Text>
+                </View>
+              )}
+              <View className="ml-3 flex-1">
+                <Text className="text-xl pr-2 font-bold text-white line-clamp-1">
                   {profileData?.name}
                 </Text>
               </View>

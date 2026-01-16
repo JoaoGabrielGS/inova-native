@@ -1,6 +1,7 @@
 import { ActivityIndicator, Image, ScrollView } from "react-native";
 import { Text, View } from "react-native";
 import useProfile from "@/src/_hooks/useProfile";
+import { getColor, getInitials } from "@/src/lib/utils";
 
 export default function ProfileScreen() {
   const { isLoading, profileData } = useProfile();
@@ -13,7 +14,6 @@ export default function ProfileScreen() {
     );
   }
 
-  // 2. Só renderiza o ScrollView se profileData existir
   if (!profileData) {
     return (
       <View className="flex-1 bg-brand-grey-10 justify-center items-center">
@@ -25,11 +25,29 @@ export default function ProfileScreen() {
   return (
     <ScrollView className="flex-1 bg-brand-grey-10 py-20 p-2">
       <View>
-        {profileData?.avatarUrl && (
+        {profileData?.avatarUrl ? (
           <Image
             source={{ uri: profileData.avatarUrl }}
             className="w-40 h-40 rounded-full border-2 border-white mx-auto"
           />
+        ) : (
+          <View
+            style={{
+              backgroundColor: getColor(profileData?.id),
+              width: 160,
+              height: 160,
+              borderRadius: 80,
+              borderWidth: 1,
+              borderColor: "white",
+              alignItems: "center",
+              justifyContent: "center",
+              marginHorizontal: "auto",
+            }}
+          >
+            <Text style={{ color: "white", fontWeight: "bold", fontSize: 20 }}>
+              {profileData?.name ? getInitials(profileData.name) : ""}
+            </Text>
+          </View>
         )}
 
         <Text className="mt-4 text-white font-bold text-2xl text-center">
@@ -66,7 +84,9 @@ export default function ProfileScreen() {
         <View className="my-4 ">
           <Text className="text-left mb-2 text-white ">CEP</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
-            <Text className="text-white ">{profileData?.address.cep}</Text>
+            <Text className="text-white ">
+              {profileData?.address?.cep ?? "Não informado"}
+            </Text>
           </View>
         </View>
 
@@ -120,21 +140,27 @@ export default function ProfileScreen() {
         <View className="my-4 ">
           <Text className="text-left mb-2 text-white ">CEP</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
-            <Text className="text-white ">{profileData?.address.cep}</Text>
+            <Text className="text-white ">
+              {profileData?.address?.cep ?? "Não informado"}
+            </Text>
           </View>
         </View>
 
         <View className="my-4 ">
           <Text className="text-left mb-2 text-white ">Endereço</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
-            <Text className="text-white ">{profileData?.address.street}</Text>
+            <Text className="text-white ">
+              {profileData?.address?.street ?? "Não informado"}
+            </Text>
           </View>
         </View>
 
         <View className="my-4 ">
           <Text className="text-left mb-2 text-white ">Número</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
-            <Text className="text-white ">{profileData?.address.number}</Text>
+            <Text className="text-white ">
+              {profileData?.address?.number ?? "Não informado"}
+            </Text>
           </View>
         </View>
 
@@ -142,7 +168,7 @@ export default function ProfileScreen() {
           <Text className="text-left mb-2 text-white ">Bairro</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
             <Text className="text-white ">
-              {profileData?.address.neighborhood}
+              {profileData?.address?.neighborhood ?? "Não Informado"}
             </Text>
           </View>
         </View>
@@ -150,21 +176,27 @@ export default function ProfileScreen() {
         <View className="my-4 ">
           <Text className="text-left mb-2 text-white ">Cidade</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
-            <Text className="text-white ">{profileData?.address.city}</Text>
+            <Text className="text-white ">
+              {profileData?.address?.city ?? "Não informado"}
+            </Text>
           </View>
         </View>
 
         <View className="my-4 ">
           <Text className="text-left mb-2 text-white ">Estado</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
-            <Text className="text-white ">{profileData?.address.state}</Text>
+            <Text className="text-white ">
+              {profileData?.address?.state ?? "Não informado"}
+            </Text>
           </View>
         </View>
 
         <View className="mb-20 mt-4">
           <Text className="text-left mb-2 text-white ">Complemento</Text>
           <View className="bg-brand-grey-8 w-full p-4 rounded-md">
-            <Text className="text-white ">{profileData?.address.state}</Text>
+            <Text className="text-white ">
+              {profileData?.address?.state ?? "Não informado"}
+            </Text>
           </View>
         </View>
       </View>
