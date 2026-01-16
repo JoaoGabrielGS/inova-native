@@ -8,8 +8,9 @@ import {
 } from "../services/courses/consumption";
 import { courseService } from "../services/courses";
 import { QUERIES } from "../constants/queries";
-import ToastUtils from "../utils/toastUtils";
 import { agreementTermService } from "../services/agreement-term";
+import ToastUtils from "../utils/toastUtils";
+import { progressService } from "../services/progress";
 
 export const selectedLessonAtom = atom<CourseConsumptionLesson | null>(null);
 
@@ -114,87 +115,54 @@ export const useLearnSidebar = (
     ],
   });
 
-  // const { mutateAsync: watchLesson } = useMutation({
-  //   mutationFn: async ({
-  //     lessonId,
-  //   }: {
-  //     lessonId: number;
-  //     lessonIndex: number;
-  //     disciplineIndex: number;
-  //     moduleIndex: number;
-  //   }) => {
-  //     return await progressService.create(lessonId, enrollmentId);
-  //   },
-  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  //   onSuccess: (_, { lessonIndex, disciplineIndex, moduleIndex }) => {
-  //     course.modules[moduleIndex].disciplines[disciplineIndex].lessons[
-  //       lessonIndex
-  //     ].watched = true;
-  //     progress.progressPercentage = Math.min(
-  //       progress.progressPercentage + progress.itemPercentage,
-  //       100,
-  //     );
-  //     setProgressPercentageAtom(progress.progressPercentage);
-  //     queryClient.invalidateQueries({
-  //       queryKey: [QUERIES.COURSE.GET_BY_ENROLLMENT_ID, enrollmentId],
-  //     });
-  //   },
-  // });
+  const { mutateAsync: watchLesson } = useMutation({
+    mutationFn: async ({
+      lessonId,
+    }: {
+      lessonId: number;
+      lessonIndex: number;
+      disciplineIndex: number;
+      moduleIndex: number;
+    }) => {
+      return await progressService.create(lessonId, enrollmentId);
+    },
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onSuccess: (_, { lessonIndex, disciplineIndex, moduleIndex }) => {
+      course.modules[moduleIndex].disciplines[disciplineIndex].lessons[
+        lessonIndex
+      ].watched = true;
+      progress.progressPercentage = Math.min(
+        progress.progressPercentage + progress.itemPercentage,
+        100,
+      );
+      setProgressPercentageAtom(progress.progressPercentage);
+      queryClient.invalidateQueries({
+        queryKey: [QUERIES.COURSE.GET_BY_ENROLLMENT_ID, enrollmentId],
+      });
+    },
+  });
 
-  // const mutationCertificate = useMutation({
-  //   mutationFn: (courseId: number) => certificateService.generate(courseId),
-  //   onSuccess(data) {
-  //     return data;
-  //   },
-  //   onError: () => {
-  //     ToastUtils.showError(
-  //       "Não foi possível gerar o certificado, tente novamente.",
-  //     );
-  //   },
-  // });
+  const handleCompleteLesson = async () => {
+    if (!selectedLessonIndexes || !selectedLesson) return;
 
-  // const generateCertificate = async (courseId: number): Promise<string> => {
-  //   const result = await mutationCertificate.mutateAsync(courseId);
+    const { moduleIndex, disciplineIndex, lessonIndex } = selectedLessonIndexes;
+    const lesson = selectedLesson;
 
-  //   if (result.toLowerCase().endsWith(".pdf")) {
-  //     const a = document.createElement("a");
-  //     a.href = result;
-  //     a.download = "certificado.pdf";
-  //     a.target = "_blank";
-  //     document.body.appendChild(a);
-  //     a.click();
-  //     document.body.removeChild(a);
-  //   }
+    if (lesson.watched) return;
 
-  //   queryClient.invalidateQueries({
-  //     queryKey: [QUERIES.COURSE.CAN_GENERATE, courseId],
-  //     exact: false,
-  //   });
-
-  //   return result;
-  // };
-
-  // const handleCompleteLesson = async () => {
-  //   if (!selectedLessonIndexes || !selectedLesson) return;
-
-  //   const { moduleIndex, disciplineIndex, lessonIndex } = selectedLessonIndexes;
-  //   const lesson = selectedLesson;
-
-  //   if (lesson.watched) return;
-
-  //   try {
-  //     await watchLesson({
-  //       lessonId: lesson.id,
-  //       disciplineIndex,
-  //       moduleIndex,
-  //       lessonIndex,
-  //     });
-  //     lesson.watched = true;
-  //     setSelectedLesson({ ...lesson });
-  //   } catch (error) {
-  //     ToastUtils.showError("Não foi possível concluir a aula.");
-  //   }
-  // };
+    try {
+      await watchLesson({
+        lessonId: lesson.id,
+        disciplineIndex,
+        moduleIndex,
+        lessonIndex,
+      });
+      lesson.watched = true;
+      setSelectedLesson({ ...lesson });
+    } catch (error) {
+      ToastUtils.showError("Não foi possível concluir a aula.");
+    }
+  };
 
   const handleSelectLesson = ({
     lesson,
@@ -492,7 +460,6 @@ export const useLearnSidebar = (
       isLoadingCanGenerate,
       dropdownOpen,
       isOpen,
-
       isModuleEvaluation,
       isDisciplineEvaluation,
       posModalOpen,
@@ -511,13 +478,12 @@ export const useLearnSidebar = (
       setSelectedDiscipline: updateSelectedDiscipline,
       verifyAttempts,
       professionalModalAttemptOpen,
-      // generateCertificate,
       setPosModalOpen,
       setProfessionalModalOpen,
       getTotalWatchedByLessons,
       handleNextLesson,
       handlePrevLesson,
-      // handleCompleteLesson,
+      handleCompleteLesson,
       setOpenModuleId,
       setOpenDisciplineId,
     },

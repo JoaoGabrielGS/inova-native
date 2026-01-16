@@ -12,6 +12,7 @@ import { useAtom } from "jotai";
 import {
   selectedDisciplineNameAtom,
   selectedLessonAtom,
+  useLearnSidebar,
 } from "@/src/_hooks/useLearnSidebar";
 import Separator from "@/src/components/ui/separator";
 import { Button } from "@/src/components/ui/button";
@@ -20,9 +21,18 @@ import VideoAndPdfViewer from "@/src/components/ui/mediaViewer";
 const CourseConsumptionScreen = () => {
   const { enrollmentId } = useLocalSearchParams();
   const {
-    states: { course, isOpen, enrollment },
+    states: { course, isOpen, enrollment, isSigned },
     actions: { setIsOpen },
   } = useCourseConsumption(Number(enrollmentId));
+
+  const {
+    states: { isFirstLesson, isLastLesson, isNextDisciplineLiberated },
+    actions: { handleNextLesson, handlePrevLesson, handleCompleteLesson },
+  } = useLearnSidebar(
+    enrollment as CourseConsumptionResponse,
+    true,
+    Number(enrollmentId),
+  );
 
   const [disciplineName] = useAtom(selectedDisciplineNameAtom);
   const [selectedLesson] = useAtom(selectedLessonAtom);
@@ -82,7 +92,7 @@ const CourseConsumptionScreen = () => {
                           : "border-gray-500 text-gray-400"
                       }`}
                       variant={selectedClass.watched ? "success" : "outline"}
-                      // onPress={handleCompleteLesson}
+                      onPress={handleCompleteLesson}
                       disabled={selectedClass.watched}
                       text="Concluir Aula"
                     />
@@ -90,16 +100,18 @@ const CourseConsumptionScreen = () => {
 
                   <Separator className="my-4" />
 
-                  {/* <View className="mt-6 flex-row items-center justify-between w-full">
+                  <View className="mt-6 flex-row items-center justify-between w-full">
                     <View className="flex-1">
                       {!isFirstLesson && (
-                        <Button variant="outline" onPress={handlePrevLesson}>
-                          <Text>Aula Anterior</Text>
-                        </Button>
+                        <Button
+                          variant="outline"
+                          onPress={handlePrevLesson}
+                          text="Aula Anterior"
+                        />
                       )}
                     </View>
 
-                    <View className="flex-1 items-center">
+                    {/* <View className="flex-1 items-center">
                       <Text className="text-xs font-bold text-gray-400">
                         Avalie esta aula
                       </Text>
@@ -108,19 +120,18 @@ const CourseConsumptionScreen = () => {
                         onRatingSubmit={handleRatingSubmit}
                         hasRating={!!selectedClass.feedback}
                       />
-                    </View>
+                    </View> */}
 
                     <View className="flex-1 items-end">
                       {!isLastLesson && (
                         <Button
                           onPress={handleNextLesson}
                           disabled={!isNextDisciplineLiberated}
-                        >
-                          <Text>Próxima Aula</Text>
-                        </Button>
+                          text="Próxima Aula"
+                        />
                       )}
                     </View>
-                  </View> */}
+                  </View>
                 </View>
               )}
             </ScrollView>
@@ -161,8 +172,7 @@ const CourseConsumptionScreen = () => {
               {course && (
                 <LearnSidebar
                   enrollment={enrollment as CourseConsumptionResponse}
-                  // show={(course?.type.id === 1 || isSigned) ?? false}
-                  show={true}
+                  show={(course?.type.id === 1 || isSigned) ?? false}
                 />
               )}
             </ScrollView>
