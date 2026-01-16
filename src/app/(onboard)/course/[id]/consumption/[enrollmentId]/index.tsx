@@ -20,6 +20,7 @@ import { Button } from "@/src/components/ui/button";
 import VideoAndPdfViewer from "@/src/components/ui/mediaViewer";
 import TermsAndContractsRequestDialog from "@/src/components/course/sign-terms-and-contracts-dialog";
 import StarRatingConsumption from "@/src/components/ui/star-rating";
+import { useEffect } from "react";
 
 const CourseConsumptionScreen = () => {
   const { enrollmentId } = useLocalSearchParams();
@@ -36,7 +37,7 @@ const CourseConsumptionScreen = () => {
       // isLoadingTerms,
       // isErrorTerms,
     },
-    actions: { setIsOpen, handleRatingSubmit },
+    actions: { setIsOpen },
   } = useCourseConsumption(Number(enrollmentId));
 
   const {
@@ -49,10 +50,13 @@ const CourseConsumptionScreen = () => {
   );
 
   const [disciplineName] = useAtom(selectedDisciplineNameAtom);
-  const [selectedLesson] = useAtom(selectedLessonAtom);
   const [selectedClass, setSelectedClass] =
     useAtom<CourseConsumptionLesson | null>(selectedLessonAtom);
   const [progressPercentage] = useAtom(progressPercentageAtom);
+
+  useEffect(() => {
+    setSelectedClass(null);
+  }, [enrollmentId]);
 
   return (
     <View className="flex-1 bg-brand-grey-10">
@@ -126,7 +130,7 @@ const CourseConsumptionScreen = () => {
                       )}
                     </View>
 
-                    <View className="flex-1 items-center">
+                    {/* <View className="flex-1 items-center">
                       <Text className="text-xs font-bold text-gray-400">
                         Avalie esta aula
                       </Text>
@@ -135,7 +139,7 @@ const CourseConsumptionScreen = () => {
                         onRatingSubmit={handleRatingSubmit}
                         hasRating={!!selectedClass.feedback}
                       />
-                    </View>
+                    </View> */}
 
                     <View className="w-1/5 items-end">
                       {!isLastLesson && (

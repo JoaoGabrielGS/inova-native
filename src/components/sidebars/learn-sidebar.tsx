@@ -122,13 +122,6 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
               ? "Aprovado - Visualizar Avaliação"
               : "Atividade"
           }
-          icon={
-            props.isCertificateble ? (
-              <ClipboardCheck size={20} />
-            ) : (
-              <Edit3 size={20} />
-            )
-          }
           className="w-full"
         />
       </>
