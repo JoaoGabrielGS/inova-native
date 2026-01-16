@@ -1,6 +1,6 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { ChevronDown, CheckCircle2, Lock } from "lucide-react-native";
+import { View, Text } from "react-native";
+import { CheckCircle2, Lock } from "lucide-react-native";
 import {
   Accordion,
   AccordionItem,
@@ -14,7 +14,7 @@ const Discipline = ({ className, children, ...props }: any) => {
   return (
     <Accordion
       variant="discipline"
-      className={cn("flex-col gap-2", className)}
+      className={cn("flex-col gap-2 w-full px-3", className)}
       {...props}
     >
       {children}
@@ -43,7 +43,7 @@ const DisciplineTrigger = ({
       variant="discipline"
       value={value}
       disabled={unavailable}
-      className={cn("px-0 py-0", className)} // Removemos padding padrão para customizar dentro
+      className={cn("px-0 py-0", className)}
       {...props}
     >
       <View className="flex-row w-full gap-4 pb-2">
@@ -56,7 +56,7 @@ const DisciplineTrigger = ({
               <Text
                 className={cn(
                   "text-sm font-bold",
-                  unavailable ? "text-gray-600" : "text-brand-gray-pause",
+                  unavailable ? "text-gray-600" : "text-white",
                 )}
               >
                 {children}
@@ -68,7 +68,7 @@ const DisciplineTrigger = ({
             )}
 
             {unavailable && (
-              <View className="flex h-8 w-8 items-center justify-center rounded-full bg-slate-800">
+              <View className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-grey-8">
                 <Lock size={14} color="white" />
               </View>
             )}

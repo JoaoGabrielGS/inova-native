@@ -32,10 +32,10 @@ const ConfirmInitProfessionalExamDialog: React.FC<
       animationType="fade"
       onRequestClose={() => onOpenChange(false)}
     >
-      <View className="flex-1 items-center justify-center bg-black/50 px-4">
-        <View className="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl max-h-[90%]">
+      <View className="flex-1 items-center justify-center bg-black/30 px-4">
+        <View className="w-full max-w-md rounded-2xl p-6 shadow-xl bg-brand-grey-9 max-h-[90%]">
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Text className="w-full text-center text-xl font-bold text-slate-900">
+            <Text className="w-full text-center text-xl font-bold text-white">
               Você está iniciando uma atividade...
             </Text>
 
@@ -43,8 +43,8 @@ const ConfirmInitProfessionalExamDialog: React.FC<
 
             <View className="gap-y-6">
               <View className="flex-row">
-                <Text className="mr-2 font-bold text-slate-700">1.</Text>
-                <Text className="flex-1 text-base text-slate-700">
+                <Text className="mr-2 font-bold text-white">1.</Text>
+                <Text className="flex-1 text-base text-white">
                   Para realizar esta atividade avaliativa você deve responder a{" "}
                   <Text className="font-bold text-brand-primary-9">
                     10 questões objetivas
@@ -54,8 +54,8 @@ const ConfirmInitProfessionalExamDialog: React.FC<
               </View>
 
               <View className="flex-row">
-                <Text className="mr-2 font-bold text-slate-700">2.</Text>
-                <Text className="flex-1 text-base text-slate-700">
+                <Text className="mr-2 font-bold text-white">2.</Text>
+                <Text className="flex-1 text-base text-white">
                   Antes de iniciar, certifique-se de ter acesso a uma{" "}
                   <Text className="font-bold text-brand-primary-9">
                     conexão de internet estável
@@ -73,8 +73,8 @@ const ConfirmInitProfessionalExamDialog: React.FC<
               </View>
 
               <View className="flex-row">
-                <Text className="mr-2 font-bold text-slate-700">3.</Text>
-                <Text className="flex-1 text-base text-slate-700">
+                <Text className="mr-2 font-bold text-white">3.</Text>
+                <Text className="flex-1 text-base text-white">
                   Após a conclusão, o sistema deverá corrigir e exibir o{" "}
                   <Text className="font-bold text-brand-primary-9">
                     gabarito com as respostas
@@ -83,8 +83,8 @@ const ConfirmInitProfessionalExamDialog: React.FC<
               </View>
 
               <View className="flex-row">
-                <Text className="mr-2 font-bold text-slate-700">4.</Text>
-                <Text className="flex-1 text-base text-slate-700">
+                <Text className="mr-2 font-bold text-white">4.</Text>
+                <Text className="flex-1 text-base text-white">
                   Caso{" "}
                   <Text className="font-bold text-brand-primary-9">
                     reprove

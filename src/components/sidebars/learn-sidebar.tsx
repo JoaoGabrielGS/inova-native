@@ -1,18 +1,3 @@
-import { Text, View } from "react-native";
-import {
-  Module,
-  ModuleContent,
-  ModuleItem,
-  ModuleTrigger,
-} from "../accordions/module";
-import { CheckCircle2, ClipboardCheck, Edit3 } from "lucide-react-native";
-import {
-  Discipline,
-  DisciplineContent,
-  DisciplineItem,
-  DisciplineTrigger,
-} from "../accordions/discipline";
-import { ClassGrid, ClassItem } from "../grids/class-grid";
 import {
   selectedLessonAtom,
   useLearnSidebar,
@@ -24,12 +9,27 @@ import {
   CourseConsumptionModule,
   CourseConsumptionResponse,
 } from "@/src/services/courses/consumption";
+import HelpersUtils from "@/src/utils/helpers.utils";
+import { router } from "expo-router";
 import { useAtom } from "jotai";
+import { CheckCircle2 } from "lucide-react-native";
+import { Text, View } from "react-native";
+import {
+  Discipline,
+  DisciplineContent,
+  DisciplineItem,
+  DisciplineTrigger,
+} from "../accordions/discipline";
+import {
+  Module,
+  ModuleContent,
+  ModuleItem,
+  ModuleTrigger,
+} from "../accordions/module";
+import { ClassGrid, ClassItem } from "../grids/class-grid";
+import ConfirmInitProfessionalExamDialog from "../modals/confirm-init-professional-exam-dialog";
 import ConfirmInitExamDialog from "../modals/confirmInitExam";
 import { Button } from "../ui/button";
-import { router } from "expo-router";
-import HelpersUtils from "@/src/utils/helpers.utils";
-import ConfirmInitProfessionalExamDialog from "../modals/confirm-init-professional-exam-dialog";
 
 interface LearnSidebarProps {
   enrollment: CourseConsumptionResponse;
@@ -123,14 +123,14 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
               ? "Aprovado - Visualizar Avaliação"
               : "Atividade"
           }
-          className="w-full"
+          className="w-full text-white"
         />
       </>
     );
   };
 
   return (
-    <View className="w-full gap-4 px-4">
+    <View className="w-full gap-4">
       <View>
         <Module value={openModuleId} onValueChange={setOpenModuleId}>
           {course.modules?.map((module, moduleIndex) => {

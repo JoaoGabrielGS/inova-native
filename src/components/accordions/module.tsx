@@ -1,19 +1,19 @@
-import React, { forwardRef } from "react";
+import { cn } from "@/src/lib/utils";
+import React from "react";
 import { View } from "react-native";
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTriggerNative,
-  AccordionContent,
 } from "../ui/accordionSidebar";
-import { cn } from "@/src/lib/utils";
 import Separator from "../ui/separator";
 
 const Module = ({ className, children, ...props }: any) => {
   return (
     <Accordion
       variant="module"
-      className={cn("flex-col gap-4", className)}
+      className={cn("flex-col gap-4 w-full", className)}
       {...props}
     >
       {children}
@@ -46,4 +46,4 @@ const ModuleContent = ({ children, value, ...props }: any) => {
   );
 };
 
-export { Module, ModuleItem, ModuleTrigger, ModuleContent };
+export { Module, ModuleContent, ModuleItem, ModuleTrigger };

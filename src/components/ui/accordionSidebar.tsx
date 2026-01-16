@@ -1,14 +1,14 @@
-import React, { useState, createContext, useContext } from "react";
+import { cn } from "@/src/lib/utils";
+import { cva } from "class-variance-authority";
+import { ChevronDown } from "lucide-react-native";
+import React, { createContext, useContext, useState } from "react";
 import {
-  View,
-  TouchableOpacity,
   LayoutAnimation,
   Platform,
+  TouchableOpacity,
   UIManager,
+  View,
 } from "react-native";
-import { ChevronDown } from "lucide-react-native";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "@/src/lib/utils";
 
 if (
   Platform.OS === "android" &&

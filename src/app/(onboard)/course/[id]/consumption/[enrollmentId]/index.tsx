@@ -1,26 +1,25 @@
 import useCourseConsumption from "@/src/_hooks/useCourseConsumption";
-import StudentProgress from "@/src/components/course/student-progress";
-import LearnSidebar from "@/src/components/sidebars/learn-sidebar";
-import {
-  CourseConsumptionLesson,
-  CourseConsumptionResponse,
-} from "@/src/services/courses/consumption";
-import { useLocalSearchParams } from "expo-router";
-import { ChevronLeft, ChevronRight } from "lucide-react-native";
-import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useAtom } from "jotai";
 import {
   progressPercentageAtom,
   selectedDisciplineNameAtom,
   selectedLessonAtom,
   useLearnSidebar,
 } from "@/src/_hooks/useLearnSidebar";
-import Separator from "@/src/components/ui/separator";
+import TermsAndContractsRequestDialog from "@/src/components/course/sign-terms-and-contracts-dialog";
+import StudentProgress from "@/src/components/course/student-progress";
+import LearnSidebar from "@/src/components/sidebars/learn-sidebar";
 import { Button } from "@/src/components/ui/button";
 import VideoAndPdfViewer from "@/src/components/ui/mediaViewer";
-import TermsAndContractsRequestDialog from "@/src/components/course/sign-terms-and-contracts-dialog";
-import StarRatingConsumption from "@/src/components/ui/star-rating";
+import Separator from "@/src/components/ui/separator";
+import {
+  CourseConsumptionLesson,
+  CourseConsumptionResponse,
+} from "@/src/services/courses/consumption";
+import { useLocalSearchParams } from "expo-router";
+import { useAtom } from "jotai";
+import { List } from "lucide-react-native";
 import { useEffect } from "react";
+import { Modal, ScrollView, Text, TouchableOpacity, View } from "react-native";
 
 const CourseConsumptionScreen = () => {
   const { enrollmentId } = useLocalSearchParams();
@@ -160,9 +159,9 @@ const CourseConsumptionScreen = () => {
 
       <TouchableOpacity
         onPress={() => setIsOpen(true)}
-        className="absolute bottom-4 right-4 z-10 h-12 w-12 items-center justify-center rounded-full bg-brand-blue-8"
+        className="absolute bottom-4 right-4 z-10 h-12 w-12 items-center justify-center rounded-full bg-brand-primary-9"
       >
-        <ChevronLeft size={24} color="white" />
+        <List size={24} color="white" />
       </TouchableOpacity>
 
       <Modal
@@ -177,8 +176,8 @@ const CourseConsumptionScreen = () => {
             onPress={() => setIsOpen(false)}
           />
 
-          <View className="h-full w-[85%] bg-brand-grey-10 p-4 shadow-lg">
-            <View className="mb-4 flex-row items-center justify-between">
+          <View className="h-full w-[85%] bg-brand-grey-10 shadow-lg">
+            <View className="mb-4 flex-row items-center p-3 justify-between">
               <Text className="text-lg font-bold text-gray-400">
                 Conteúdo do Curso
               </Text>

@@ -10,7 +10,9 @@ interface ClassGridProps {
 
 const ClassGrid = ({ children, className }: ClassGridProps) => {
   return (
-    <View className={cn("flex-col gap-2 mt-2", className)}>{children}</View>
+    <View className={cn("flex-col gap-2 mt-2 w-[96%]", className)}>
+      {children}
+    </View>
   );
 };
 
@@ -42,27 +44,21 @@ const ClassItem = ({
       {...props}
     >
       <View className="flex-row items-center flex-1 mr-2">
-        {/* Ícone de Concluído */}
-        <CheckCircle2
-          size={18}
-          color={completed ? "#10b981" : "#3f3f46"} // text-brand-green ou cor de zinco/card
-        />
+        <CheckCircle2 size={18} color={completed ? "#10b981" : "#3f3f46"} />
 
-        {/* Título da Aula com Truncate */}
         <Text
           numberOfLines={1}
           className={cn(
             "ml-3 text-sm flex-1",
-            actived ? "text-white font-bold" : "text-gray-400",
+            actived ? "text-gray-400 font-bold" : "text-white",
           )}
         >
           {children}
         </Text>
       </View>
 
-      {/* Ícone de Vídeo/Play */}
       <View className="w-7 items-end">
-        <PlaySquare size={18} color={actived ? "white" : "#71717a"} />
+        <PlaySquare size={18} color={actived ? "71717a" : "white"} />
       </View>
     </TouchableOpacity>
   );

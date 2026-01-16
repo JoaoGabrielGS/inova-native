@@ -27,8 +27,7 @@ export function Button({
     outline: "border border-white bg-transparent",
     social: "border border-brand-primary-1 bg-white",
     icon: "border border-white !w-12 pl-4 bg-transparent",
-    success:
-      "bg-brand-lime-dark text-brand-lime-dark-foreground hover:bg-brand-lime-dark/80",
+    success: "bg-brand-success-7 hover:bg-brand-lime-dark/80",
   };
 
   return (
@@ -48,7 +47,9 @@ export function Button({
           )}
           <Text
             className={`text-lg font-bold ${
-              variant === "primary" || variant === "outline"
+              variant === "primary" ||
+              variant === "outline" ||
+              variant === "success"
                 ? "text-white"
                 : "text-black"
             }`}
