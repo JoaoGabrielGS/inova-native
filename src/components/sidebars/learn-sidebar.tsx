@@ -29,6 +29,7 @@ import ConfirmInitExamDialog from "../modals/confirmInitExam";
 import { Button } from "../ui/button";
 import { router } from "expo-router";
 import HelpersUtils from "@/src/utils/helpers.utils";
+import ConfirmInitProfessionalExamDialog from "../modals/confirm-init-professional-exam-dialog";
 
 interface LearnSidebarProps {
   enrollment: CourseConsumptionResponse;
@@ -42,20 +43,20 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
       isModuleEvaluation,
       isDisciplineEvaluation,
       dropdownOpen,
-      isOpen,
-      posModalOpen,
       openModuleId,
       openDisciplineId,
+      professionalModalOpen,
+      disciplineAttempt,
     },
     actions: {
       setDropdownOpen,
-      setIsOpen,
       setSelectedDiscipline,
       handleSelectLesson,
       verifyAttempts,
       professionalModalAttemptOpen,
       setOpenDisciplineId,
       setOpenModuleId,
+      setProfessionalModalOpen,
     },
   } = useLearnSidebar(enrollment, show, enrollment.id);
 
@@ -257,6 +258,12 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
         isOpen={dropdownOpen}
         onOpenChange={setDropdownOpen}
         module={course.modules[0]}
+        enrollmentId={enrollment.id}
+      />
+      <ConfirmInitProfessionalExamDialog
+        isOpen={professionalModalOpen}
+        onOpenChange={setProfessionalModalOpen}
+        discipline={disciplineAttempt}
         enrollmentId={enrollment.id}
       />
     </View>
