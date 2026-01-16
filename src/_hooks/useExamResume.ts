@@ -54,7 +54,7 @@ export const useExamResume = (
       {
         queryKey: [QUERIES.EXAM.GET, course?.id],
         queryFn: () => fetchEvaluation(course?.id ?? 0, disciplineId, moduleId),
-        enabled: !!course && !!course?.id,
+        enabled: !!course && !!course?.id && (!!disciplineId || !!moduleId),
       },
       {
         queryKey: [QUERIES.COURSE.GET, course?.id],

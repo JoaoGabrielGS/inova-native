@@ -10,20 +10,20 @@ interface ConfirmInitProfessionalExamProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   discipline?: { id: number } | null;
+  courseId?: number;
 }
 
 const ConfirmInitProfessionalExamDialog: React.FC<
   ConfirmInitProfessionalExamProps
-> = ({ enrollmentId, isOpen, onOpenChange, discipline }) => {
+> = ({ enrollmentId, isOpen, onOpenChange, discipline, courseId }) => {
   const router = useRouter();
 
-  // const handleStartActivity = () => {
-  //   onOpenChange(false);
-  //   router.push({
-  //     pathname: "/course/[id]/consumption/[enrollmentId]/prova-profissional",
-  //     params: { enrollmentId, disciplineId: discipline?.id },
-  //   });
-  // };
+  const handleStartActivity = () => {
+    onOpenChange(false);
+    router.push(
+      `/course/${courseId}/consumption/${enrollmentId}/prova?discipline=${discipline?.id}`,
+    );
+  };
 
   return (
     <Modal
@@ -100,7 +100,7 @@ const ConfirmInitProfessionalExamDialog: React.FC<
             <View className="mt-8 gap-3">
               <Button
                 className="h-14 w-full flex-row items-center justify-center bg-brand-primary-9"
-                // onPress={handleStartActivity}
+                onPress={handleStartActivity}
                 text="Iniciar Atividade Avaliativa"
                 // icon={<ChevronRight color="white" size={20} />}
               />

@@ -88,9 +88,11 @@ export const useExam = (
   } = useMutation({
     mutationFn: (data: ExamRequest) => examService.create(data),
     onSuccess: () => {
-      router.push(`/(onboard)/course/${116}/consumption/prova/resumo`);
+      router.push(
+        `/(onboard)/course/${course?.id}/consumption/${enrollment?.id}/prova/resumo?module=${moduleId}&discipline=${disciplineId}`,
+      );
     },
-    onError: (err: any) => {
+    onError: () => {
       setTimeout(() => {
         router.back();
       }, 5000);

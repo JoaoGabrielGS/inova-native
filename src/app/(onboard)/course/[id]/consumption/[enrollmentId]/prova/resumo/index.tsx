@@ -1,4 +1,4 @@
-import { useState } from "react"; // 1. Importar useState
+import { useState } from "react";
 import { useCourseDetails } from "@/src/_hooks/useCourseDetails";
 import Separator from "@/src/components/ui/separator";
 import { useLocalSearchParams } from "expo-router";
@@ -22,19 +22,25 @@ import {
   TouchableOpacity,
   Pressable,
   Image,
+  useWindowDimensions,
 } from "react-native";
 import { useExamResume } from "@/src/_hooks/useExamResume";
 import RenderHtml from "react-native-render-html";
 import Splash from "@/src/components/splash";
 
 const ResumoProva = () => {
-  const { id } = useLocalSearchParams();
+  const { id, enrollmentId, module, discipline } = useLocalSearchParams();
   const { courseDetail } = useCourseDetails(Number(id));
   const {
     states: { evaluation, isLoading },
-  } = useExamResume(106658, 1572, 1572);
+  } = useExamResume(
+    Number(enrollmentId),
+    Number(discipline) ?? 0,
+    Number(module) ?? 0,
+  );
 
   const [modalVisible, setModalVisible] = useState(false);
+  const { width } = useWindowDimensions();
 
   const ResultBlock = () => {
     if (!evaluation) return null;
@@ -138,6 +144,7 @@ const ResumoProva = () => {
                   )}
 
                   <RenderHtml
+                    contentWidth={width}
                     source={{ html: content.question.description.toString() }}
                     baseStyle={{
                       textAlign: "justify",

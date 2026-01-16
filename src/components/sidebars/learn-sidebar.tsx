@@ -92,7 +92,7 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
       if (course?.type?.id === 1 || course?.type?.id === 4) {
         if (isCertificateble) {
           router.push(
-            `/course/[id]/consumption/prova/resumo?module=${module?.id}`,
+            `/course/${course.id}/consumption/${enrollment.id}/prova/resumo?module=${module?.id}`,
           );
           return;
         }
@@ -103,7 +103,7 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
       if (course?.type?.id === 2) {
         if (isCertificateble) {
           router.push(
-            `/course/[id]/consumption/prova/resumo?discipline=${discipline?.id}`,
+            `/course/${course.id}/consumption/${enrollment.id}/prova/resumo?discipline=${discipline?.id}`,
           );
           return;
         }
@@ -265,6 +265,7 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
         onOpenChange={setProfessionalModalOpen}
         discipline={disciplineAttempt}
         enrollmentId={enrollment.id}
+        courseId={course.id}
       />
     </View>
   );

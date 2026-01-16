@@ -9,6 +9,7 @@ interface ConfirmInitExamProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   module?: { id: number } | null;
+  courseId?: number;
 }
 
 const ConfirmInitExamDialog: React.FC<ConfirmInitExamProps> = ({
@@ -16,16 +17,16 @@ const ConfirmInitExamDialog: React.FC<ConfirmInitExamProps> = ({
   isOpen,
   onOpenChange,
   module,
+  courseId,
 }) => {
   const router = useRouter();
 
-  // const handleStartActivity = () => {
-  //   onOpenChange(false);
-  //   router.push({
-  //     pathname: "/course/[id]/consumption/[enrollmentId]/prova",
-  //     params: { enrollmentId, moduleId: module?.id },
-  //   });
-  // };
+  const handleStartActivity = () => {
+    onOpenChange(false);
+    router.push(
+      `/course/${courseId}/consumption/${enrollmentId}/prova?module=${module?.id}`,
+    );
+  };
 
   return (
     <Modal
@@ -103,7 +104,7 @@ const ConfirmInitExamDialog: React.FC<ConfirmInitExamProps> = ({
             <View className="mt-8 flex-col gap-3">
               <Button
                 className="h-14 w-full flex-row items-center justify-center"
-                // onPress={handleStartActivity}
+                onPress={handleStartActivity}
                 text="Iniciar Atividade Avaliativa"
                 icon={<ChevronRight color="white" size={20} />}
               />

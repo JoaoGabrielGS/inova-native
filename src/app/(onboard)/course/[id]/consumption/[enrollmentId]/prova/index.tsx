@@ -28,11 +28,16 @@ import {
 import RenderHTML from "react-native-render-html";
 
 const Prova = () => {
+  const { id, enrollmentId, module, discipline } = useLocalSearchParams();
   const {
     states: { questions, isLoading, isLoadingSave },
     actions: { finishEvaluation },
-  } = useExam(106647, 1063, 0);
-  const { id } = useLocalSearchParams();
+  } = useExam(
+    Number(enrollmentId),
+    Number(discipline) ?? 0,
+    Number(module) ?? 0,
+  );
+
   const { courseDetail } = useCourseDetails(Number(id));
   const [modalVisible, setModalVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,30 +48,42 @@ const Prova = () => {
   const [disabled, setDisabled] = useState(true);
   const [exam, setExam] = useState<ExamRequest>({
     answers: [],
-    disciplineId: 1063,
+    disciplineId: null,
     moduleId: null,
   });
 
   const questionsSize = questions?.length || 0;
   const [confirmFinish, setConfirmFinish] = useState(false);
 
-  const storageKey = `exam-${courseDetail?.enrollment?.id}-1063`;
+  const storageKey = `exam-${courseDetail?.enrollment?.id}-${discipline || module}`;
 
   useEffect(() => {
     const loadStoredExam = async () => {
       const stored = await AsyncStorage.getItem(storageKey);
+
+      const baseExam = {
+        disciplineId: discipline ? Number(discipline) : null,
+        moduleId: module ? Number(module) : null,
+        answers: [],
+      };
+
       if (stored) {
         const jsonExam = JSON.parse(stored);
         if (jsonExam?.answers?.length > 0 && questions?.length > 0) {
           const validAnswers = jsonExam.answers.filter((ans: any) =>
             questions.some((q) => q.id === ans.questionId),
           );
-          setExam((prev) => ({ ...prev, answers: validAnswers }));
+
+          setExam({ ...baseExam, answers: validAnswers });
+          return;
         }
       }
+
+      setExam(baseExam);
     };
+
     loadStoredExam();
-  }, [questions]);
+  }, [questions, discipline, module]);
 
   useEffect(() => {
     const saveExam = async () => {
@@ -387,7 +404,7 @@ const Prova = () => {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                  disabled={!module || isSubmitting}
+                  disabled={isSubmitting}
                   onPress={async () => {
                     if (isSubmitting) return;
 
@@ -420,8 +437,8 @@ const Prova = () => {
       </Modal>
 
       <Modal visible={isLoadingSave} transparent animationType="slide">
-        <View className="flex-1 items-center justify-center bg-black/40 px-6">
-          <View className="w-full rounded-3xl bg-white p-8 shadow-xl">
+        <View className="flex-1 items-center justify-center bg-black/30 px-6">
+          <View className="w-full rounded-3xl bg-brand-grey-9 p-8 shadow-xl">
             <View className="flex-row items-center justify-center mb-4">
               <Pencil size={24} color="#10b981" />
               <Text className="ml-3 text-xl font-bold text-green-600">
@@ -429,13 +446,13 @@ const Prova = () => {
               </Text>
             </View>
 
-            <Text className="text-center text-gray-500 leading-5">
+            <Text className="text-center  text-white leading-5">
               Aguarde um momento, estamos corrigindo sua avaliação, você será
               encaminhado para o gabarito
             </Text>
 
             <View className="mt-8 py-4">
-              <ActivityIndicator color="#ef4444" className="mr-2" />
+              <ActivityIndicator color="#ef4444" size={28} className="mr-2" />
             </View>
           </View>
         </View>
