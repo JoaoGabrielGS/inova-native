@@ -93,31 +93,46 @@ const PDFViewer = ({
 
 const VideoAndPdfViewer = ({ content }: { content: string }) => {
   const { width } = useWindowDimensions();
-  const contentWidth = width - 100;
+
+  const horizontalPadding = 40;
+  const contentWidth = width - horizontalPadding;
 
   const renderers = {
     oembed: (props: any) => (
-      <VideoEmbed videoUrl={props.tnode.attributes.url} width={contentWidth} />
+      <View className="w-full items-center mb-6">
+        <VideoEmbed
+          videoUrl={props.tnode.attributes.url}
+          width={contentWidth}
+        />
+      </View>
     ),
     iframe: (props: any) => (
-      <VideoEmbed videoUrl={props.tnode.attributes.src} width={contentWidth} />
+      <View className="w-full items-center mb-6">
+        <VideoEmbed
+          videoUrl={props.tnode.attributes.src}
+          width={contentWidth}
+        />
+      </View>
     ),
-
     a: (props: any) => {
       const href = props.tnode.attributes.href;
       const textContent =
         props.tnode.init.domNode.children[0]?.data || "Clique aqui";
 
       if (href?.endsWith(".pdf")) {
-        return <PDFViewer pdfUrl={href} pdfTitle={textContent} height={500} />;
+        return (
+          <View className="w-full">
+            <PDFViewer pdfUrl={href} pdfTitle={textContent} height={500} />
+          </View>
+        );
       }
 
       return (
         <TouchableOpacity
           onPress={() => Linking.openURL(href)}
-          className="mb-6"
+          className="w-full items-center mb-6"
         >
-          <Text className="text-white font-bold text-lg underline uppercase">
+          <Text className="text-white font-bold text-lg underline uppercase text-center">
             {textContent}
           </Text>
         </TouchableOpacity>
@@ -126,24 +141,40 @@ const VideoAndPdfViewer = ({ content }: { content: string }) => {
   };
 
   return (
-    <View className="px-5 py-4">
-      <RenderHtml
-        contentWidth={contentWidth}
-        source={{ html: content }}
-        renderers={renderers}
-        customHTMLElementModels={customHTMLElementModels}
-        tagsStyles={{
-          body: { color: "white" },
-          p: {
-            color: "white",
-            marginBottom: 10,
-            fontWeight: "bold",
-            fontSize: 18,
-            textTransform: "uppercase",
-          },
-          h2: { color: "white", fontWeight: "bold", marginBottom: 5 },
-        }}
-      />
+    <View className="flex-1 w-full bg-transparent">
+      <View className="px-5 py-4 items-center">
+        <RenderHtml
+          contentWidth={contentWidth}
+          source={{ html: content }}
+          renderers={renderers}
+          customHTMLElementModels={customHTMLElementModels}
+          tagsStyles={{
+            body: {
+              color: "white",
+            },
+            p: {
+              color: "white",
+              marginBottom: 12,
+              fontWeight: "bold",
+              fontSize: 18,
+              textTransform: "uppercase",
+              textAlign: "center",
+              flexShrink: 1,
+            },
+            h2: {
+              color: "white",
+              fontWeight: "bold",
+              marginBottom: 8,
+              textAlign: "center",
+              flexShrink: 1,
+            },
+            div: {
+              alignItems: "center",
+              width: contentWidth,
+            },
+          }}
+        />
+      </View>
     </View>
   );
 };

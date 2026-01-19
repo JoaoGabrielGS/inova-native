@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import {
-  Modal,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
-import { WebView } from "react-native-webview";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useAtom } from "jotai";
-import { useNavigation } from "@react-navigation/native";
-import { agreementTermService } from "@/src/services/agreement-term";
 import { MUTATION } from "@/src/constants/mutations";
 import { QUERIES } from "@/src/constants/queries";
+import { agreementTermService } from "@/src/services/agreement-term";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
+import { useAtom } from "jotai";
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Modal,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import { WebView } from "react-native-webview";
+import { FontAwesome6 } from "@expo/vector-icons"; // Adicionado para ícones consistentes
 import { isErrorAtom } from "../dialogs/error-dialog";
 
 interface Props {
@@ -35,7 +34,6 @@ const TermsAndContractsRequestDialog = ({
   const [, setIsError] = useAtom(isErrorAtom);
   const [hasAddressed, setHasAddressed] = useState(false);
   const queryClient = useQueryClient();
-
   const router = useRouter();
 
   const { mutate, isPending: isPendingSign } = useMutation({
@@ -79,71 +77,84 @@ const TermsAndContractsRequestDialog = ({
       return { uri: `data:application/pdf;base64,${terms.posTerm}` };
     }
     return {
-      html: `<div style="font-size: 40px; padding: 20px;">${terms?.terms || ""}</div>`,
+      html: `<body style="background-color: #f8fafc; padding: 20px; font-family: sans-serif; font-size: 32px; color: #1e293b;">${terms?.terms || ""}</body>`,
     };
   };
 
   return (
     <Modal visible={isOpen} animationType="slide" transparent={true}>
-      <View className="flex-1 justify-center items-center bg-black/50 p-4">
-        <View className="bg-white w-full max-h-[90%] rounded-2xl p-6 shadow-xl">
-          {/* Header */}
-          <View className="flex-row justify-between items-center mb-4">
-            <Text className="flex-1 text-center font-bold text-lg text-gray-800">
-              Termos de Contrato
+      <View className="flex-1 bg-black/70 justify-end">
+        <View className="bg-brand-grey-10 h-[92%] rounded-t-3xl p-6 shadow-2xl">
+          <View className="flex-row justify-between items-center mb-6">
+            <Text className="text-xl font-bold text-white">
+              Contrato de Termos
             </Text>
             {hasAddressed && (
               <TouchableOpacity
                 onPress={() => router.navigate("/profile")}
-                className="bg-blue-500 px-3 py-2 rounded-lg"
+                className="bg-brand-primary-9 px-4 py-2 rounded-lg"
               >
-                <Text className="text-white text-xs font-semibold">Perfil</Text>
+                <Text className="text-white text-xs font-bold uppercase">
+                  Ir para Perfil
+                </Text>
               </TouchableOpacity>
             )}
           </View>
 
-          <View className="flex-1 min-h-[300px] border border-gray-200 rounded-md overflow-hidden bg-gray-50">
+          <View className="flex-1 border border-white/10 rounded-2xl overflow-hidden bg-white mb-6">
             <WebView
               originWhitelist={["*"]}
               source={getWebViewSource()}
-              style={{ flex: 1, backgroundColor: "transparent" }}
+              startInLoadingState={true}
+              renderLoading={() => (
+                <View className="absolute inset-0 items-center justify-center bg-white">
+                  <ActivityIndicator size="large" color="#000" />
+                </View>
+              )}
             />
           </View>
 
-          {/* Checkbox Customizado */}
           <TouchableOpacity
             onPress={() => setIsAccepted(!isAccepted)}
-            className="flex-row items-center my-4"
-            activeOpacity={0.7}
+            className="flex-row items-center mb-6"
+            activeOpacity={0.8}
           >
             <View
-              className={`w-6 h-6 border-2 rounded mr-3 items-center justify-center ${isAccepted ? "bg-blue-600 border-blue-600" : "border-gray-400"}`}
+              className={`w-7 h-7 border-2 rounded-md mr-3 items-center justify-center ${
+                isAccepted
+                  ? "bg-brand-primary-9 border-brand-primary-9"
+                  : "border-slate-500"
+              }`}
             >
-              {isAccepted && <Text className="text-white font-bold">✓</Text>}
+              {isAccepted && (
+                <FontAwesome6 name="check" size={14} color="white" />
+              )}
             </View>
-            <Text className="text-base text-gray-700">
-              Li e aceito os termos do contrato
+            <Text className="flex-1 text-slate-200 text-sm leading-5">
+              Li e concordo com todos os termos e condições do contrato de
+              prestação de serviços.
             </Text>
           </TouchableOpacity>
 
-          {/* Botão de Ação */}
           <TouchableOpacity
             disabled={!isAccepted || isLoading || isPending}
             onPress={handleAccept}
-            className={`w-full py-4 rounded-xl items-center ${
+            className={`w-full py-4 rounded-xl items-center justify-center ${
               !isAccepted || isLoading || isPending
-                ? "bg-gray-400"
-                : "bg-blue-600"
+                ? "bg-slate-700 opacity-50"
+                : "bg-brand-primary-9"
             }`}
           >
             {isPendingSign ? (
               <ActivityIndicator color="#FFF" />
             ) : (
-              <Text className="text-white text-lg font-bold">
-                Visualizar Curso
+              <Text className="text-white text-base font-bold uppercase tracking-wider">
+                Confirmar e Continuar
               </Text>
             )}
           </TouchableOpacity>
+
+          <View className="h-4" />
         </View>
       </View>
     </Modal>
