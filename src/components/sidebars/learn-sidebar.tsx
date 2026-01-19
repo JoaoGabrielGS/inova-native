@@ -30,6 +30,7 @@ import { ClassGrid, ClassItem } from "../grids/class-grid";
 import ConfirmInitProfessionalExamDialog from "../modals/confirm-init-professional-exam-dialog";
 import ConfirmInitExamDialog from "../modals/confirmInitExam";
 import { Button } from "../ui/button";
+import { CourseType } from "@/src/enums/courseType";
 
 interface LearnSidebarProps {
   enrollment: CourseConsumptionResponse;
@@ -89,7 +90,7 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
       module,
       isCertificateble,
     }: EvaluationButtonProps) => {
-      if (course?.type?.id === 1 || course?.type?.id === 4) {
+      if (course?.type?.id === CourseType.Rapido) {
         if (isCertificateble) {
           router.push(
             `/course/${course.id}/consumption/${enrollment.id}/prova/resumo?module=${module?.id}`,
@@ -100,7 +101,10 @@ const LearnSidebar = ({ enrollment, show }: LearnSidebarProps) => {
         return;
       }
 
-      if (course?.type?.id === 2) {
+      if (
+        course?.type?.id === CourseType.Proffisionalizante ||
+        course?.type.id === CourseType.Graducao
+      ) {
         if (isCertificateble) {
           router.push(
             `/course/${course.id}/consumption/${enrollment.id}/prova/resumo?discipline=${discipline?.id}`,

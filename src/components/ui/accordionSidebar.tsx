@@ -2,20 +2,7 @@ import { cn } from "@/src/lib/utils";
 import { cva } from "class-variance-authority";
 import { ChevronDown } from "lucide-react-native";
 import React, { createContext, useContext, useState } from "react";
-import {
-  LayoutAnimation,
-  Platform,
-  TouchableOpacity,
-  UIManager,
-  View,
-} from "react-native";
-
-if (
-  Platform.OS === "android" &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
+import { LayoutAnimation, TouchableOpacity, View } from "react-native";
 
 const AccordionContext = createContext<{
   activeItem: string | null;

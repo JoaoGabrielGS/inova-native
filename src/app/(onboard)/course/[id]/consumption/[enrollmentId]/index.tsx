@@ -8,6 +8,7 @@ import {
 import TermsAndContractsRequestDialog from "@/src/components/course/sign-terms-and-contracts-dialog";
 import StudentProgress from "@/src/components/course/student-progress";
 import LearnSidebar from "@/src/components/sidebars/learn-sidebar";
+import Splash from "@/src/components/splash";
 import { Button } from "@/src/components/ui/button";
 import VideoAndPdfViewer from "@/src/components/ui/mediaViewer";
 import Separator from "@/src/components/ui/separator";
@@ -32,6 +33,7 @@ const CourseConsumptionScreen = () => {
       isSignedFetched,
       isSignedLoading,
       terms,
+      isLoadingEnrollment,
       rating,
       // isLoadingTerms,
       // isErrorTerms,
@@ -56,6 +58,10 @@ const CourseConsumptionScreen = () => {
   useEffect(() => {
     setSelectedClass(null);
   }, [enrollmentId]);
+
+  if (isLoadingEnrollment) {
+    return <Splash />;
+  }
 
   return (
     <View className="flex-1 bg-brand-grey-10">

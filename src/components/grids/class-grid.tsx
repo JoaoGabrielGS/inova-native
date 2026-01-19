@@ -58,7 +58,7 @@ const ClassItem = ({
       </View>
 
       <View className="w-7 items-end">
-        <PlaySquare size={18} color={actived ? "71717a" : "white"} />
+        <PlaySquare size={18} color={actived ? "#71717a" : "white"} />
       </View>
     </TouchableOpacity>
   );
